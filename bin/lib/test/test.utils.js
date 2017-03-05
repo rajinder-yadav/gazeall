@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// test( "hello", t => {
-//   t.equal( utils.hello(), "Hello TSCLI!" );
-//   t.end();
-// } );
+var test = require("tape");
+test("Gazeall", function (t) {
+    t.equal("Watching gazeall run!", "Watching gazeall run!");
+    t.end();
+});
