@@ -2,12 +2,12 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/gazeall-0.0.3-blue.svg)
+![Version](https://img.shields.io/badge/gazeall-0.1.0-blue.svg)
 ![License](https://img.shields.io/badge/TSCLI-GPL--3.0-blue.svg)
 
-This project is based off [watch-run](https://www.npmjs.com/package/watch-run), it is completely re-written in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli), response time is lightening-fast.
+This project is developed in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli).
 
-## Watch and run!
+## Watch and run
 
 ![Image of Gazelle](img/gazelle.png)
 
@@ -31,8 +31,8 @@ gazeall --help
     -h, --help       output usage information
     -V, --version    output the version number
     --run <command>  command to run.
-    --halt-on-error  halt on error.
     --delay <ms>     delay value in milliseconds.
+    --halt-on-error  halt on error.
 ```
 
 ### Examples
