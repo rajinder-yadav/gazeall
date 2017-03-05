@@ -8,11 +8,11 @@ import { watchAndRun } from "./lib/utils";
  */
 
 cmd
-  .version( "0.0.3" )
+  .version( "0.1.0" )
   .usage( "[options] <file ...>" )
   .option( "--run <command>", "command to run." )
-  .option( "--halt-on-error", "halt on error." )
   .option( "--delay <ms>", "delay value in milliseconds." )
+  .option( "--halt-on-error", "halt on error." )
   .parse( process.argv );
 
 /**
