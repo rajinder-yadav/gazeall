@@ -1,15 +1,21 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "outDir": "./build"
-    },
-    "include": [
-      "src/**/*"
-    ],
-    "exclude": [
-      "node_modules"
-    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "outDir": "./bin"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "bin/**/*",
+    "build/**/*",
+    "dist/**/*",
+    "docs/**/*",
+    "log/*",
+    "node_modules/**/*",
+    "test/**/*"
+  ]
 }

@@ -1,21 +1,23 @@
-import * as bunyan from "bunyan";
+#!/usr/bin/env node
 
-const log = bunyan.createLogger( {
-  name: "main",
-  streams: [
-    {
-      level: "info",
-      path: "./logs/main.log"
-    }
-  ]
-} );
+import * as cmd from "commander";
+import { watchAndRun } from "./lib/utils";
 
-const welcome = (): string => {
-  return "Welcome to TSCLI - Demo program is working!";
-};
+/**
+ * Command options.
+ */
 
-log.info( "Entering main" );
+cmd
+  .version( "0.0.1" )
+  .usage( "[options] <file ...>" )
+  .option( "--run <command>", "command to run." )
+  .option( "--halt-on-error", "halt on error." )
+  .option( "--delay <ms>", "delay value in milliseconds." )
+  .parse( process.argv );
 
-console.log( welcome() );
-
-log.info( "Exiting main" );
+/**
+ * Start watching after delay interval or next event loop if value not provided.
+ */
+setTimeout(() => {
+  watchAndRun( cmd );
+}, cmd.delay || 0 );
