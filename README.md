@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.1.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.1.2-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 
 This project is developed in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli).
@@ -35,24 +35,39 @@ gazeall --help
     --halt-on-error  halt on error.
 ```
 
-### Examples
+## Examples
 
-Run `ls -l` command when any file under folder, `src/` its folders change. Make sure you place command inside quotes if options are passed or there are multiple commands.
+The examples below run the `ls` command when folder or files change.
 
-When using globs to recurse into sub-folders, make sure to put them inside quotes.
+1. Make sure to place command inside quotes if options are passed or there are multiple commands.
+1. When using globs to recurse into sub-folders, make sure to put them inside quotes.
+
+### Watch all files and sub-folders
 
 ```sh
 gazeall --run "ls -l" "src/**/*"
 ```
 
-Target specific files.
+### Target specific files
 
 ```sh
 gazeall --run "ls -l" index.html src/main.ts
 ```
 
-Target all JavaScript files under `src/` folder.
+### Target all JavaScript files under `src/` folder
 
 ```sh
 gazeall --run "ls -l" src/*.ts
 ```
+
+### Running mutiples commands
+
+```sh
+gazeall --run "ls -l|egrep '\bt'" src/*
+```
+
+## Use in a NPM script
+
+```js
+  "scripts": {
+    "
