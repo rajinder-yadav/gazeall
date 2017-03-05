@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/gazeall-0.0.1-blue.svg)
+![Version](https://img.shields.io/badge/gazeall-0.0.3-blue.svg)
 ![License](https://img.shields.io/badge/TSCLI-GPL--3.0-blue.svg)
 
 This project is based off [watch-run](https://www.npmjs.com/package/watch-run), it is completely re-written in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli), response time is lightening-fast.
