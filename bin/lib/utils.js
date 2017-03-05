@@ -26,7 +26,7 @@ function watchAndRun(cmd) {
         if (!cmd.run && cmd.runNpm) {
             var run_list = cmd.runNpm.split(/\s+/);
             run_list.forEach(function (command) {
-                runCommand("npm run " + command, cmd.haltOnError);
+                runSyncCommand("npm run " + command, cmd.haltOnError);
             });
         }
     }); // gaze.on
@@ -44,4 +44,17 @@ function runCommand(command, err_halt) {
             console.log("stderr: " + stdout);
         }
     }); // exec
+}
+function runSyncCommand(command, err_halt) {
+    try {
+        var out = child_process_1.execSync(command);
+        if (out) {
+            console.log("stdout: " + out);
+        }
+    }
+    catch (err) {
+        if (err_halt) {
+            throw err;
+        }
+    }
 }

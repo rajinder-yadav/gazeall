@@ -1,5 +1,5 @@
 import { Gaze } from "gaze";
-import { exec } from "child_process";
+import { exec, execSync } from "child_process";
 
 /**
  * Command types
@@ -42,7 +42,7 @@ export function watchAndRun( cmd: CommandOptions ): void {
     if ( !cmd.run && cmd.runNpm ) {
       const run_list = cmd.runNpm.split( /\s+/ );
       run_list.forEach( command => {
-        runCommand( `npm run ${ command }`, cmd.haltOnError );
+        runSyncCommand( `npm run ${ command }`, cmd.haltOnError );
       } );
     }
 
@@ -62,4 +62,18 @@ function runCommand( command: string, err_halt: boolean ) {
       console.log( `stderr: ${ stdout }` );
     }
   } ); // exec
+}
+
+
+function runSyncCommand( command: string, err_halt: boolean ) {
+  try {
+    const out = execSync( command );
+    if ( out ) {
+      console.log( `stdout: ${ out }` );
+    }
+  } catch ( err ) {
+    if ( err_halt ) {
+      throw err;
+    }
+  }
 }
