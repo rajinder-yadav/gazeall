@@ -1,6 +1,5 @@
-import * as test from "tape";
-import * as utils from "../utils";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // test( "hello", t => {
 //   t.equal( utils.hello(), "Hello TSCLI!" );
 //   t.end();

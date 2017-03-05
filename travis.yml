@@ -1,0 +1,17 @@
+sudo: false
+language: node_js
+cache: yarn
+notifications:
+  email: false
+node_js:
+  - "7"
+  - "6"
+  - "5"
+  - "4"
+script:
+  - yarn test
+branches:
+  only:
+    - master
+matrix:
+  fast_finish: true
