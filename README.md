@@ -5,13 +5,17 @@
 ![Version](https://img.shields.io/badge/Gazeall-0.1.4-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 
-This project is developed in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli).
+This project was developed in TypeScript with the help of [TSCLI](https://github.com/rajinder-yadav/tscli).
 
 ## Watch and run
 
 ![Image of Gazelle](img/gazelle.png)
 
-Gazeall watches files and folders for changes, then leaps to action and execute a command.
+_Gazeall_ watches files and folders for changes, then leaps to action and execute a command.
+
+_Gazeall_ works both as a CLI tool and equally well running NPM scripts inside `package.json`.
+
+NPM Scripts can be run in parallel or synchronous mode.
 
 ## Install
 
@@ -22,22 +26,24 @@ npm -g install gazeall
 ## Usage
 
 ```sh
-gazeall --help
+$ gazeall --help
 
   Usage: gazeall [options] <file ...>
 
   Options:
 
-    -h, --help       output usage information
-    -V, --version    output the version number
-    --run <command>  command to run.
-    --delay <ms>     delay value in milliseconds.
-    --halt-on-error  halt on error.
+    -h, --help            output usage information
+    -V, --version         output the version number
+    --run <commands>      commands to run.
+    --runp-npm <scripts>  npm scripts to run parallel.
+    --runs-npm <scripts>  npm scripts to run synchronous.
+    --delay <ms>          delay value in milliseconds.
+    --halt-on-error       halt on error.
 ```
 
-## Examples
+## CLI Examples
 
-The examples below run the `ls` command when folder or files change.
+The examples below show various ways to run _gazeall_ from the command line.
 
 1. Make sure to place command inside quotes if options are passed or there are multiple commands.
 1. When using globs to recurse into sub-folders, make sure to put them inside quotes.
@@ -54,20 +60,62 @@ gazeall --run "ls -l" "src/**/*"
 gazeall --run "ls -l" index.html src/main.ts
 ```
 
-### Target all JavaScript files under `src/` folder
+### Target all JavaScript files under a folder
 
 ```sh
 gazeall --run "ls -l" src/*.ts
 ```
 
-### Running mutiples commands
+### Running multiple commands
 
 ```sh
 gazeall --run "ls -l|egrep '\bt'" src/*
 ```
 
-## Use in a NPM script
+
+## NPM script examples
+
+For running NPM scripts, _gazeall_ can run scripts either in _parallel_ or _synchronous_.
+
+* To run in parallel mode, use: `--runp-npm`.
+* To run in synchronous mode, use: `--runs-npm`.
+
+
+### Run NPM scripts in synchronous mode
+
+In sync mode, _gazeall_ will wait for the running command to complete before running the next command.
 
 ```js
   "scripts": {
-    "
+    "webwatch": "gazeall --runs-npm \"build webinit webrefresh\" \"src/**/*\""
+  }
+```
+
+Here the build script runs on two folders and their sub-folders.
+
+```js
+  "scripts": {
+    "build": "gazeall --runs-npm \"build\" \"src/**/*\" \"vendor/**/*\""
+  }
+```
+
+### Run NPM scripts in parallel mode
+
+In parallel mode, all scripts execute one after the other without waiting for the last to complete.
+
+```js
+  "scripts": {
+    "build": "gazeall --runp-npm \"build:prod build:compressed\" \"src/**/*\""
+  }
+```
+
+Build from two folders and their sub-folders.
+
+```js
+  "scripts": {
+    "build": "gazeall --runp-npm \"build:prod build:compressed\" \"src/**/*\" \"vendor/**/*\""
+  }
+```
+
+_Note_: We make use of double quote and need to escape them, this is the best practice as single quotes can have problem when used on Windows.
+
