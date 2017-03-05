@@ -2,8 +2,8 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/gazeall-0.1.0-blue.svg)
-![License](https://img.shields.io/badge/TSCLI-GPL--3.0-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 
 This project is developed in TypeScript using [TSCLI](https://github.com/rajinder-yadav/tscli).
 
