@@ -7,9 +7,10 @@ var utils_1 = require("./lib/utils");
  * Command options.
  */
 cmd
-    .version("0.1.0")
+    .version("0.1.1")
     .usage("[options] <file ...>")
-    .option("--run <command>", "command to run.")
+    .option("--run <commands>", "commands to run.")
+    .option("--run-npm <scripts>", "npm scripts to run.")
     .option("--delay <ms>", "delay value in milliseconds.")
     .option("--halt-on-error", "halt on error.")
     .parse(process.argv);

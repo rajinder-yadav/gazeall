@@ -13,7 +13,6 @@ function watchAndRun(cmd) {
         console.log("Nothing passed for watch, existing!\nFor usage, type: gazeall --help.");
         process.exit(0);
     }
-    // console.log( `>> ${ cmd.args }` );
     var gaze = new gaze_1.Gaze(cmd.args);
     // Uncomment for debugging
     // gaze.on( "ready", watcher => {
@@ -21,21 +20,28 @@ function watchAndRun(cmd) {
     //   console.log( watched );
     // } );
     gaze.on("changed", function (file) {
-        // console.log( `${ file } was changed.` );
-        // console.log( `running: ${ cmd.run }` );
-        if (file && file.length > 0) {
-            child_process_1.exec(cmd.run, function (err, stdout, stderr) {
-                if (err && cmd.haltOnError) {
-                    throw err;
-                }
-                if (stderr) {
-                    console.log("stdout: " + stderr);
-                }
-                if (stdout) {
-                    console.log("stderr: " + stdout);
-                }
-            }); // exec
-        } // if
+        if (cmd.run && !cmd.runNpm) {
+            runCommand(cmd.run, cmd.haltOnError);
+        }
+        if (!cmd.run && cmd.runNpm) {
+            var run_list = cmd.runNpm.split(/\s+/);
+            run_list.forEach(function (command) {
+                runCommand("npm run " + command, cmd.haltOnError);
+            });
+        }
     }); // gaze.on
 }
 exports.watchAndRun = watchAndRun;
+function runCommand(command, err_halt) {
+    child_process_1.exec(command, function (err, stdout, stderr) {
+        if (err && err_halt) {
+            throw err;
+        }
+        if (stderr) {
+            console.log("stdout: " + stderr);
+        }
+        if (stdout) {
+            console.log("stderr: " + stdout);
+        }
+    }); // exec
+}

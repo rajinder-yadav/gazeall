@@ -8,7 +8,8 @@ import { exec } from "child_process";
 export interface CommandOptions {
   files: string | string[];
   haltOnError?: boolean;
-  run: string;
+  run?: string;
+  runNpm?: string;
   [ args: string ]: any;
 };
 
@@ -23,7 +24,7 @@ export function watchAndRun( cmd: CommandOptions ): void {
     console.log( "Nothing passed for watch, existing!\nFor usage, type: gazeall --help." );
     process.exit( 0 );
   }
-  // console.log( `>> ${ cmd.args }` );
+
   const gaze = new Gaze( cmd.args );
 
   // Uncomment for debugging
@@ -33,25 +34,32 @@ export function watchAndRun( cmd: CommandOptions ): void {
   // } );
 
   gaze.on( "changed", file => {
-    // console.log( `${ file } was changed.` );
-    // console.log( `running: ${ cmd.run }` );
 
-    if ( file && file.length > 0 ) {
+    if ( cmd.run && !cmd.runNpm ) {
+      runCommand( cmd.run, cmd.haltOnError );
+    }
 
-      exec( cmd.run, ( err, stdout, stderr ) => {
-        if ( err && cmd.haltOnError ) {
-          throw err;
-        }
-        if ( stderr ) {
-          console.log( `stdout: ${ stderr }` );
-        }
-        if ( stdout ) {
-          console.log( `stderr: ${ stdout }` );
-        }
-      } ); // exec
-
-    } // if
+    if ( !cmd.run && cmd.runNpm ) {
+      const run_list = cmd.runNpm.split( /\s+/ );
+      run_list.forEach( command => {
+        runCommand( `npm run ${ command }`, cmd.haltOnError );
+      } );
+    }
 
   } ); // gaze.on
 
+}
+
+function runCommand( command: string, err_halt: boolean ) {
+  exec( command, ( err, stdout, stderr ) => {
+    if ( err && err_halt ) {
+      throw err;
+    }
+    if ( stderr ) {
+      console.log( `stdout: ${ stderr }` );
+    }
+    if ( stdout ) {
+      console.log( `stderr: ${ stdout }` );
+    }
+  } ); // exec
 }
