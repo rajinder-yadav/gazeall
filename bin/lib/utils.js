@@ -20,11 +20,17 @@ function watchAndRun(cmd) {
     //   console.log( watched );
     // } );
     gaze.on("changed", function (file) {
-        if (cmd.run && !cmd.runNpm) {
+        if (cmd.run) {
             runCommand(cmd.run, cmd.haltOnError);
         }
-        if (!cmd.run && cmd.runNpm) {
-            var run_list = cmd.runNpm.split(/\s+/);
+        if (cmd.runpNpm) {
+            var run_list = cmd.runpNpm.split(/\s+/);
+            run_list.forEach(function (command) {
+                runCommand("npm run " + command, cmd.haltOnError);
+            });
+        }
+        if (cmd.runsNpm) {
+            var run_list = cmd.runsNpm.split(/\s+/);
             run_list.forEach(function (command) {
                 runSyncCommand("npm run " + command, cmd.haltOnError);
             });

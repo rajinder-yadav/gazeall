@@ -9,7 +9,8 @@ export interface CommandOptions {
   files: string | string[];
   haltOnError?: boolean;
   run?: string;
-  runNpm?: string;
+  runpNpm?: string;
+  runsNpm?: string;
   [ args: string ]: any;
 };
 
@@ -35,12 +36,19 @@ export function watchAndRun( cmd: CommandOptions ): void {
 
   gaze.on( "changed", file => {
 
-    if ( cmd.run && !cmd.runNpm ) {
+    if ( cmd.run ) {
       runCommand( cmd.run, cmd.haltOnError );
     }
 
-    if ( !cmd.run && cmd.runNpm ) {
-      const run_list = cmd.runNpm.split( /\s+/ );
+    if ( cmd.runpNpm ) {
+      const run_list = cmd.runpNpm.split( /\s+/ );
+      run_list.forEach( command => {
+        runCommand( `npm run ${ command }`, cmd.haltOnError );
+      } );
+    }
+
+    if ( cmd.runsNpm ) {
+      const run_list = cmd.runsNpm.split( /\s+/ );
       run_list.forEach( command => {
         runSyncCommand( `npm run ${ command }`, cmd.haltOnError );
       } );
