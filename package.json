@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Gazeall - The command executor and file watcher.",
   "main": "src/main.ts",
   "config": {
@@ -56,6 +56,7 @@
     "typescript-formatter": "^5.1.0"
   },
   "dependencies": {
+    "commander": "^2.9.0",
     "gaze": "^1.1.2"
   }
 }

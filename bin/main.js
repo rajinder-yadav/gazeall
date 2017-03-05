@@ -7,7 +7,7 @@ var utils_1 = require("./lib/utils");
  * Command options.
  */
 cmd
-    .version("0.0.1")
+    .version("0.0.3")
     .usage("[options] <file ...>")
     .option("--run <command>", "command to run.")
     .option("--halt-on-error", "halt on error.")
