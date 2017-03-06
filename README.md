@@ -11,11 +11,13 @@ This project was developed in TypeScript with the help of [TSCLI](https://github
 
 ![Image of Gazelle](img/gazelle.png)
 
-_Gazeall_ watches files and folders for changes, then leaps to action and execute a command.
+_Gazeall_ watches files and folders for changes, then leaps to action and executes a command.
 
 _Gazeall_ works both as a CLI tool and equally well running NPM scripts inside `package.json`.
 
 NPM Scripts can be run in parallel or synchronous mode.
+
+**Update**: I am currently considering adding support for watching process and doing something useful in this usage scenario. If you have ideas, open a issue labeled enhancements. Same applys for any other general ideas.
 
 ## Install
 
