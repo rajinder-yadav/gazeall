@@ -8,7 +8,7 @@ import { watchAndRun } from "./lib/utils";
  */
 
 cmd
-  .version( "0.1.5" )
+  .version( "0.1.6" )
   .usage( "[options] <file ...>" )
   .option( "--run <commands>", "commands to run." )
   .option( "--runp-npm <scripts>", "npm scripts to run parallel." )

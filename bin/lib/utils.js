@@ -44,10 +44,11 @@ function runCommand(command, err_halt) {
             throw err;
         }
         if (stderr) {
-            console.log("stdout: " + stderr);
+            console.log(stderr);
+            return;
         }
         if (stdout) {
-            console.log("stderr: " + stdout);
+            console.log(stdout);
         }
     }); // exec
 }
@@ -55,7 +56,7 @@ function runSyncCommand(command, err_halt) {
     try {
         var out = child_process_1.execSync(command);
         if (out) {
-            console.log("stdout: " + out);
+            console.log(out);
         }
     }
     catch (err) {
