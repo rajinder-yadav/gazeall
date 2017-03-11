@@ -2,6 +2,12 @@
 
 All changes to this project will be recorded in this document.
 
+
+## 0.1.5 (2017-03-11)
+
+* Cleaned up how executed process result is display.
+* Fixed a minor display issue of displaying both stderr and stdout.
+
 ## 0.1.5 (2017-03-05)
 
 * Added support to run NPM script in parallel and synchronous mode.

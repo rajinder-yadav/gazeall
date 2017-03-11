@@ -64,10 +64,11 @@ function runCommand( command: string, err_halt: boolean ) {
       throw err;
     }
     if ( stderr ) {
-      console.log( `stdout: ${ stderr }` );
+      console.log( stderr );
+      return;
     }
     if ( stdout ) {
-      console.log( `stderr: ${ stdout }` );
+      console.log( stdout );
     }
   } ); // exec
 }
@@ -77,7 +78,7 @@ function runSyncCommand( command: string, err_halt: boolean ) {
   try {
     const out = execSync( command );
     if ( out ) {
-      console.log( `stdout: ${ out }` );
+      console.log( out );
     }
   } catch ( err ) {
     if ( err_halt ) {

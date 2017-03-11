@@ -1,7 +1,7 @@
 {
   "name": "gazeall",
-  "version": "0.1.5",
-  "description": "Gazeall - The command executor and file watcher.",
+  "version": "0.1.6",
+  "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
     "doc_folder": "docs/typedoc"
