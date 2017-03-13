@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.1.6-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.2.0-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 
 This project was developed in TypeScript with the help of [TSCLI](https://github.com/rajinder-yadav/tscli).
@@ -34,13 +34,14 @@ $ gazeall --help
 
   Options:
 
-    -h, --help            output usage information
-    -V, --version         output the version number
-    --run <commands>      commands to run.
-    --runp-npm <scripts>  npm scripts to run parallel.
-    --runs-npm <scripts>  npm scripts to run synchronous.
-    --delay <ms>          delay value in milliseconds.
-    --halt-on-error       halt on error.
+    -h, --help             output usage information
+    -V, --version          output the version number
+    --run <commands>       run commands then wait for changes to re-run.
+    --wait-run <commands>  wait first, commands to run on changes.
+    --runp-npm <scripts>   npm scripts to run parallel.
+    --runs-npm <scripts>   npm scripts to run synchronous.
+    --delay <ms>           start delay value in milliseconds.
+    --halt-on-error        halt on error.
 ```
 
 ## CLI Examples
@@ -52,26 +53,34 @@ The examples below show various ways to run _gazeall_ from the command line.
 
 ### Watch all files and sub-folders
 
+This will run the command and then start to watch file for changes to re-run command.
+
 ```sh
-gazeall --run "ls -l" "src/**/*"
+gazeall --run "node src/main.js" "src/**/*"
+```
+
+### Wait first Run on changes
+
+```sh
+gazeall --wait-run "node src/main.js" "src/**/*"
 ```
 
 ### Target specific files
 
 ```sh
-gazeall --run "ls -l" index.html src/main.ts
+gazeall --run "node src/main.js" index.html src/main.js
 ```
 
 ### Target all JavaScript files under a folder
 
 ```sh
-gazeall --run "ls -l" src/*.ts
+gazeall --run "node src/main.js" index.html src/*.js
 ```
 
 ### Running multiple commands
 
 ```sh
-gazeall --run "ls -l|egrep '\bt'" src/*
+gazeall --run "tsc src/*.ts && node build/main.js" src/*
 ```
 
 

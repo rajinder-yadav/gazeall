@@ -8,12 +8,13 @@ import { watchAndRun } from "./lib/utils";
  */
 
 cmd
-  .version( "0.1.6" )
+  .version( "0.2.0" )
   .usage( "[options] <file ...>" )
-  .option( "--run <commands>", "commands to run." )
+  .option( "--run <commands>", "run commands then wait for changes to re-run." )
+  .option( "--wait-run <commands>", "wait first, commands to run on changes." )
   .option( "--runp-npm <scripts>", "npm scripts to run parallel." )
   .option( "--runs-npm <scripts>", "npm scripts to run synchronous." )
-  .option( "--delay <ms>", "delay value in milliseconds." )
+  .option( "--delay <ms>", "start delay value in milliseconds." )
   .option( "--halt-on-error", "halt on error." )
   .parse( process.argv );
 
@@ -22,4 +23,4 @@ cmd
  */
 setTimeout(() => {
   watchAndRun( cmd );
-}, cmd.delay || 0 );
+}, parseInt( cmd.delay ) || 0 );

@@ -3,6 +3,14 @@
 All changes to this project will be recorded in this document.
 
 
+## 0.2.0 (2017-03-11)
+
+* Fixed process execution for `--run`, now correctly run process a detched Child.
+* Changed behaviour, switch `--run` now runs commands first then waits for updates.
+* New switch `--wait-run`, will wait first then run commands on updates.
+* Convets string to integer when value passed using switch `--delay`.
+* Now terminates previous launched Child process if still running before re-running commands.
+
 ## 0.1.5 (2017-03-11)
 
 * Cleaned up how executed process result is display.
