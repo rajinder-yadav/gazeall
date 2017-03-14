@@ -22,11 +22,12 @@ let running_process: ChildProcess;
 /**
  * Run command on file or folder change.
  *
- * @param {Object} cmd
+ * @param {CommandOptions} cmd - The program arguments from commander module.
+ * @return {void}
  */
 export function watchAndRun( cmd: CommandOptions ): void {
   if ( !cmd.args || cmd.args.length === 0 ) {
-    console.log( "Nothing passed for watch, existing!\nFor usage, type: gazeall --help." );
+    console.log( "Nothing passed to watch, exiting!\nFor usage, type: gazeall --help." );
     process.exit( 0 );
   }
 
@@ -45,7 +46,7 @@ export function watchAndRun( cmd: CommandOptions ): void {
   //   console.log( watched );
   // } );
 
-  gaze.on( "changed", file => {
+  gaze.on( "changed", ( file: string ) => {
     if ( running_process ) {
       running_process.kill();
       running_process = undefined;
@@ -57,7 +58,8 @@ export function watchAndRun( cmd: CommandOptions ): void {
 
 /**
  * Execute Child process based on switch used.
- * @param cmd - Commanded program argument.
+ * @param {CommandOptions} cmd - Commander program arguments.
+ * @return {void}
  */
 function run( cmd: CommandOptions ): void {
   // Only one of the following with run.
@@ -66,15 +68,15 @@ function run( cmd: CommandOptions ): void {
   }
 
   if ( cmd.runpNpm ) {
-    const run_list = cmd.runpNpm.split( /\s+/ );
-    run_list.forEach( command => {
+    const run_list: string[] = cmd.runpNpm.split( /\s+/ );
+    run_list.forEach(( command: string ) => {
       runNPMCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   }
 
   if ( cmd.runsNpm ) {
-    const run_list = cmd.runsNpm.split( /\s+/ );
-    run_list.forEach( command => {
+    const run_list: string[] = cmd.runsNpm.split( /\s+/ );
+    run_list.forEach(( command: string ) => {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   }
@@ -82,39 +84,44 @@ function run( cmd: CommandOptions ): void {
 
 /**
  *
- * @param command: string - Command executed in a detached Child process.
- * @param err_halt: boolean - true will exit of error.
+ * @param {string} command - Command executed in a detached Child process.
+ * @param {err_halt} boolean - Determines gazeall respose on an error,
+ *                              If false, then ignore the error,
+ *                              If true, then exit gazeall.
+ * @return {void}
  */
-function runCommand( command: string, err_halt: boolean ) {
-  const args = command.split( /\s+/ );
-  const proc = args.shift();
+function runCommand( command: string, err_halt: boolean ): void {
+  const args: string[] = command.split( /\s+/ );
+  const proc: string = args.shift();
   running_process = spawn( proc, args, { detached: true } );
 
-  running_process.stdout.on( "data", data => {
+  running_process.stdout.on( "data", ( data: Buffer ) => {
     console.log( data.toString() );
   } );
 
-  running_process.stderr.on( "data", data => {
-    console.log( data );
+  running_process.stderr.on( "data", ( data: Buffer ) => {
+    console.log( data.toString() );
     if ( err_halt ) {
-      console.log( "Error! Forked Child process terminating" );
-      console.log( data.toString() );
+      console.log( "Error! Forked Child process terminating." );
       process.exit( 1 );
     }
   } );
 
   // Uncomment to debug process termination.
   // running_process.on( "close", code => {
-  //   console.log( "TERMINATED" );
+  //   console.log( "TERMINATED: Child process." );
   // } );
 }
 
 /**
  * Run NPM scripts asynchronously for switch --runp-npm
- * @param command: string - Command to executed
- * @param err_halt: boolean - true will exit on error.
+ * @param {string} command - Command to execute.
+ * @param {boolean} err_halt - Determines gazeall respose on an error,
+ *                              If false, then ignore the error,
+ *                              If true, then exit gazeall.
+ * @return {void}
  */
-function runNPMCommand( command: string, err_halt: boolean ) {
+function runNPMCommand( command: string, err_halt: boolean ): void {
   exec( command, ( err, stdout, stderr ) => {
     if ( err && err_halt ) {
       throw err;
@@ -131,12 +138,15 @@ function runNPMCommand( command: string, err_halt: boolean ) {
 
 /**
  * Run NPM scripts synchronously for switch --runs-npm
- * @param command: string - Command to executed
- * @param err_halt: boolean - true will exit on error.
+ * @param {string} command - Command to execute.
+ * @param {boolean} err_halt - Determines gazeall respose on an error,
+ *                              If false, then ignore the error,
+ *                              If true, then exit gazeall.
+ * @return {void}
  */
-function runNPMSyncCommand( command: string, err_halt: boolean ) {
+function runNPMSyncCommand( command: string, err_halt: boolean ): void {
   try {
-    const out = execSync( command );
+    const out: Buffer | String = execSync( command );
     if ( out ) {
       console.log( out );
     }

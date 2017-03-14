@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
@@ -28,8 +28,10 @@
   "keywords": [
     "javascript",
     "js",
+    "npm",
     "ts",
-    "typescript"
+    "typescript",
+    "watcher"
   ],
   "author": "Rajinider Yadav <devguy.ca@gmail.com> (https://github.com/rajinder-yadav)",
   "license": "GPL-3.0",
@@ -38,7 +40,6 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.35",
     "@types/node": "^7.0.5",
     "@types/tape": "^4.2.29",
     "core-js": "^2.4.1",
