@@ -8,7 +8,7 @@ import { watchAndRun } from "./lib/utils";
  */
 
 cmd
-  .version( "0.2.2" )
+  .version( "0.2.3" )
   .usage( "[options] <file ...>" )
   .option( "--run <commands>", "run commands then wait for changes to re-run." )
   .option( "--wait-first", "wait first, commands will run on changes." )

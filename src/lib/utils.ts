@@ -17,11 +17,10 @@ export interface CommandOptions {
 /**
  * Current running Child process.
  */
-let running_process: ChildProcess;
+let child_procs: ChildProcess[];
 
 /**
  * Run command on file or folder change.
- *
  * @param {CommandOptions} cmd - The program arguments from commander module.
  * @return {void}
  */
@@ -32,7 +31,7 @@ export function watchAndRun( cmd: CommandOptions ): void {
   }
 
   // Check if we run first or wait first.
-  if ( cmd.run && !cmd.waitFirst ) {
+  if ( !cmd.waitFirst ) {
     run( cmd );
   }
 
@@ -45,9 +44,11 @@ export function watchAndRun( cmd: CommandOptions ): void {
   // } );
 
   gaze.on( "changed", ( file: string ) => {
-    if ( running_process ) {
-      running_process.kill();
-      running_process = undefined;
+    if ( child_procs ) {
+      child_procs.forEach(( proc: ChildProcess ) => {
+        proc.kill();
+      } );
+      child_procs = [];
     }
     run( cmd );
   } );
@@ -81,7 +82,7 @@ function run( cmd: CommandOptions ): void {
 }
 
 /**
- *
+ * Child process run in detached mode in their own terminal.
  * @param {string} command - Command executed in a detached Child process.
  * @param {err_halt} boolean - Determines gazeall respose on an error,
  *                              If false, then ignore the error,
@@ -90,14 +91,15 @@ function run( cmd: CommandOptions ): void {
  */
 function runCommand( command: string, err_halt: boolean ): void {
   const args: string[] = command.split( /\s+/ );
-  const proc: string = args.shift();
-  running_process = spawn( proc, args, { detached: true } );
+  const cmd: string = args.shift();
+  const proc = spawn( cmd, args, { detached: true } );
+  child_procs.push( proc );
 
-  running_process.stdout.on( "data", ( data: Buffer ) => {
+  proc.stdout.on( "data", ( data: Buffer ) => {
     console.log( data.toString() );
   } );
 
-  running_process.stderr.on( "data", ( data: Buffer ) => {
+  proc.stderr.on( "data", ( data: Buffer ) => {
     console.log( data.toString() );
     if ( err_halt ) {
       console.log( "Error! Forked Child process terminating." );
@@ -106,7 +108,7 @@ function runCommand( command: string, err_halt: boolean ): void {
   } );
 
   // Uncomment to debug process termination.
-  // running_process.on( "close", code => {
+  // child_procs.on( "close", code => {
   //   console.log( "TERMINATED: Child process." );
   // } );
 }
@@ -120,18 +122,20 @@ function runCommand( command: string, err_halt: boolean ): void {
  * @return {void}
  */
 function runNPMCommand( command: string, err_halt: boolean ): void {
-  exec( command, ( err, stdout, stderr ) => {
-    if ( err && err_halt ) {
-      throw err;
-    }
-    if ( stderr ) {
-      console.log( stderr );
-      return;
-    }
-    if ( stdout ) {
-      console.log( stdout );
-    }
-  } ); // exec
+  const proc: ChildProcess =
+    exec( command, ( err, stdout, stderr ) => {
+      if ( err && err_halt ) {
+        throw err;
+      }
+      if ( stderr ) {
+        console.log( stderr );
+        return;
+      }
+      if ( stdout ) {
+        console.log( stdout );
+      }
+    } ); // exec
+  child_procs.push( proc );
 }
 
 /**
@@ -146,7 +150,7 @@ function runNPMSyncCommand( command: string, err_halt: boolean ): void {
   try {
     const out: Buffer | String = execSync( command );
     if ( out ) {
-      console.log( out );
+      console.log( out.toString() );
     }
   } catch ( err ) {
     if ( err_halt ) {
