@@ -59,7 +59,7 @@ This will run the command and then start to watch file for changes to re-run com
 gazeall --run "node src/main.js" "src/**/*"
 ```
 
-### Wait first Run on changes
+### Wait first and run on changes
 
 ```sh
 gazeall --wait-first --run "node src/main.js" "src/**/*"
