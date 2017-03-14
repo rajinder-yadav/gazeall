@@ -2,6 +2,12 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.2.1 (2017-03-14)
+
+* Fixed error ouput for `--run`, raw Buffer was getting displayed.
+* Fixed usage message.
+* Switch to no implicit any for TypeScript.
+* Add new search keywords for NPM module.
 
 ## 0.2.0 (2017-03-11)
 
