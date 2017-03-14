@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.2.4 (2017-03-14)
+
+* Fixed TypeScript variable `undefined` crash by initializing it.
+
 ## 0.2.3 (2017-03-14)
 
 * Fixed how child processes get terminated.

@@ -17,7 +17,7 @@ export interface CommandOptions {
 /**
  * Current running Child process.
  */
-let child_procs: ChildProcess[];
+let child_procs: ChildProcess[] = [];
 
 /**
  * Run command on file or folder change.
@@ -92,7 +92,7 @@ function run( cmd: CommandOptions ): void {
 function runCommand( command: string, err_halt: boolean ): void {
   const args: string[] = command.split( /\s+/ );
   const cmd: string = args.shift();
-  const proc = spawn( cmd, args, { detached: true } );
+  const proc: ChildProcess = spawn( cmd, args, { detached: true } );
   child_procs.push( proc );
 
   proc.stdout.on( "data", ( data: Buffer ) => {
