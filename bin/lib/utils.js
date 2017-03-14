@@ -9,11 +9,8 @@ function watchAndRun(cmd) {
         console.log("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help.");
         process.exit(0);
     }
-    if (cmd.run && !cmd.waitRun) {
+    if (cmd.run && !cmd.waitFirst) {
         run(cmd);
-    }
-    else {
-        cmd.run = cmd.waitRun;
     }
     var gaze = new gaze_1.Gaze(cmd.args);
     gaze.on("changed", function (file) {

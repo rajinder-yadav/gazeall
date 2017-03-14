@@ -8,7 +8,7 @@ export interface CommandOptions {
   files: string | string[];
   haltOnError?: boolean;
   run?: string;
-  waitRun?: string;
+  waitFirst?: boolean;
   runpNpm?: string;
   runsNpm?: string;
   [ args: string ]: any;
@@ -32,10 +32,8 @@ export function watchAndRun( cmd: CommandOptions ): void {
   }
 
   // Check if we run first or wait first.
-  if ( cmd.run && !cmd.waitRun ) {
+  if ( cmd.run && !cmd.waitFirst ) {
     run( cmd );
-  } else {
-    cmd.run = cmd.waitRun;
   }
 
   const gaze = new Gaze( cmd.args );

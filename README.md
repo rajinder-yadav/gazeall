@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.2.1-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.2.2-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 
 This project was developed in TypeScript with the help of [TSCLI](https://github.com/rajinder-yadav/tscli).
@@ -34,14 +34,14 @@ $ gazeall --help
 
   Options:
 
-    -h, --help             output usage information
-    -V, --version          output the version number
-    --run <commands>       run commands then wait for changes to re-run.
-    --wait-run <commands>  wait first, commands to run on changes.
-    --runp-npm <scripts>   npm scripts to run parallel.
-    --runs-npm <scripts>   npm scripts to run synchronous.
-    --delay <ms>           start delay value in milliseconds.
-    --halt-on-error        halt on error.
+    -h, --help            output usage information
+    -V, --version         output the version number
+    --run <commands>      run commands then wait for changes to re-run.
+    --wait-first          wait first, commands will run on changes.
+    --runp-npm <scripts>  npm scripts to run parallel.
+    --runs-npm <scripts>  npm scripts to run synchronous.
+    --delay <ms>          start delay value in milliseconds.
+    --halt-on-error       halt on error.
 ```
 
 ## CLI Examples
