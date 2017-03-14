@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.2.5 (2017-03-14)
+
+* Version bump to update README in NPM release.
+
 ## 0.2.4 (2017-03-14)
 
 * Fixed TypeScript variable `undefined` crash by initializing it.
