@@ -3,20 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var gaze_1 = require("gaze");
 var child_process_1 = require("child_process");
 ;
-var running_process;
+var child_procs;
 function watchAndRun(cmd) {
     if (!cmd.args || cmd.args.length === 0) {
         console.log("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help.");
         process.exit(0);
     }
-    if (cmd.run && !cmd.waitFirst) {
+    if (!cmd.waitFirst) {
         run(cmd);
     }
     var gaze = new gaze_1.Gaze(cmd.args);
     gaze.on("changed", function (file) {
-        if (running_process) {
-            running_process.kill();
-            running_process = undefined;
+        if (child_procs) {
+            child_procs.forEach(function (proc) {
+                proc.kill();
+            });
+            child_procs = [];
         }
         run(cmd);
     });
@@ -41,12 +43,13 @@ function run(cmd) {
 }
 function runCommand(command, err_halt) {
     var args = command.split(/\s+/);
-    var proc = args.shift();
-    running_process = child_process_1.spawn(proc, args, { detached: true });
-    running_process.stdout.on("data", function (data) {
+    var cmd = args.shift();
+    var proc = child_process_1.spawn(cmd, args, { detached: true });
+    child_procs.push(proc);
+    proc.stdout.on("data", function (data) {
         console.log(data.toString());
     });
-    running_process.stderr.on("data", function (data) {
+    proc.stderr.on("data", function (data) {
         console.log(data.toString());
         if (err_halt) {
             console.log("Error! Forked Child process terminating.");
@@ -55,7 +58,7 @@ function runCommand(command, err_halt) {
     });
 }
 function runNPMCommand(command, err_halt) {
-    child_process_1.exec(command, function (err, stdout, stderr) {
+    var proc = child_process_1.exec(command, function (err, stdout, stderr) {
         if (err && err_halt) {
             throw err;
         }
@@ -67,12 +70,13 @@ function runNPMCommand(command, err_halt) {
             console.log(stdout);
         }
     });
+    child_procs.push(proc);
 }
 function runNPMSyncCommand(command, err_halt) {
     try {
         var out = child_process_1.execSync(command);
         if (out) {
-            console.log(out);
+            console.log(out.toString());
         }
     }
     catch (err) {

@@ -2,11 +2,16 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.2.3 (2017-03-14)
+
+* Fixed how child processes get terminated.
+* Fixed command output for `--runs-npm` switch.
+* Fixed `--wait-first` so NPM script command also work.
+
 ## 0.2.2 (2017-03-14)
 
 Breaking Chanage:
   Command switch `--wait-run` removed in favour for general `--wait-first`. This mean if you are using `--wait-run`, this will need to switch to `--run` and you will also need to add `--wait-first` to get the same behaviour. This change makes is possible to do the same when running NPM scripts.
-
 
 ## 0.2.1 (2017-03-14)
 
