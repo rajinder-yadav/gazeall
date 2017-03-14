@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var cmd = require("commander");
 var utils_1 = require("./lib/utils");
 cmd
-    .version("0.2.1")
+    .version("0.2.2")
     .usage("[options] <file ...>")
     .option("--run <commands>", "run commands then wait for changes to re-run.")
-    .option("--wait-run <commands>", "wait first, commands to run on changes.")
+    .option("--wait-first", "wait first, commands will run on changes.")
     .option("--runp-npm <scripts>", "npm scripts to run parallel.")
     .option("--runs-npm <scripts>", "npm scripts to run synchronous.")
     .option("--delay <ms>", "start delay value in milliseconds.")
