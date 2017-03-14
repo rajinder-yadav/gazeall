@@ -59,10 +59,10 @@ This will run the command and then start to watch file for changes to re-run com
 gazeall --run "node src/main.js" "src/**/*"
 ```
 
-### Wait first Run on changes
+### Wait first and run on changes
 
 ```sh
-gazeall --wait-run "node src/main.js" "src/**/*"
+gazeall --wait-first --run "node src/main.js" "src/**/*"
 ```
 
 ### Target specific files
@@ -91,6 +91,7 @@ For running NPM scripts, _gazeall_ can run scripts either in _parallel_ or _sync
 * To run in parallel mode, use: `--runp-npm`.
 * To run in synchronous mode, use: `--runs-npm`.
 
+_Note_: You may also use the `--wait-first` switch when running NPM scripts.
 
 ### Run NPM scripts in synchronous mode
 
