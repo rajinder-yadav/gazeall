@@ -1,11 +1,10 @@
 # Gazeall - Run command on folder and file changes
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
-
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
 ![Version](https://img.shields.io/badge/Gazeall-0.2.5-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
+[![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
 This project was developed in TypeScript with the help of [TSCLI](https://github.com/rajinder-yadav/tscli).
 
