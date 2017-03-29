@@ -51,7 +51,7 @@
     "tap-summary": "^3.0.1",
     "tape": "^4.6.3",
     "tape-run": "^3.0.0",
-    "tslint": "^4.4.2",
+    "tslint": "^5.0.0",
     "typedoc": "^0.5.7",
     "typescript": "^2.2.1",
     "typescript-formatter": "^5.1.0"
