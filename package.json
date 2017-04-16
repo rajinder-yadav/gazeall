@@ -43,7 +43,7 @@
     "@types/node": "^7.0.5",
     "@types/tape": "^4.2.29",
     "core-js": "^2.4.1",
-    "cross-env": "^3.1.4",
+    "cross-env": "^4.0.0",
     "cross-var": "^1.0.3",
     "husky": "^0.13.2",
     "npm-run-all": "^4.0.2",
