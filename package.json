@@ -40,21 +40,21 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
-    "@types/node": "^7.0.5",
+    "@types/node": "^7.0.12",
     "@types/tape": "^4.2.29",
     "core-js": "^2.4.1",
-    "cross-env": "^3.1.4",
+    "cross-env": "^3.2.4",
     "cross-var": "^1.0.3",
-    "husky": "^0.13.2",
+    "husky": "^0.13.3",
     "npm-run-all": "^4.0.2",
     "shx": "^0.2.2",
-    "tap-summary": "^3.0.1",
+    "tap-summary": "^3.0.2",
     "tape": "^4.6.3",
     "tape-run": "^3.0.0",
-    "tslint": "^4.4.2",
-    "typedoc": "^0.5.7",
-    "typescript": "^2.2.1",
-    "typescript-formatter": "^5.1.0"
+    "tslint": "^4.5.1",
+    "typedoc": "^0.5.10",
+    "typescript": "^2.3.0",
+    "typescript-formatter": "^5.1.3"
   },
   "dependencies": {
     "commander": "^2.9.0",
