@@ -12,7 +12,7 @@ export interface CommandOptions {
   runpNpm?: string;
   runsNpm?: string;
   [ args: string ]: any;
-};
+}
 
 /**
  * Current running Child process.

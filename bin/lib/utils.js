@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var gaze_1 = require("gaze");
 var child_process_1 = require("child_process");
-;
 var child_procs = [];
 function watchAndRun(cmd) {
     if (!cmd.args || cmd.args.length === 0) {
