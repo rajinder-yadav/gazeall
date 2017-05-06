@@ -52,7 +52,7 @@
     "tape": "^4.6.3",
     "tape-run": "^3.0.0",
     "tslint": "^5.0.0",
-    "typedoc": "^0.5.10",
+    "typedoc": "^0.6.0",
     "typescript": "^2.3.0",
     "typescript-formatter": "^5.1.3"
   },
