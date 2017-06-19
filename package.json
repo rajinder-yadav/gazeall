@@ -40,7 +40,7 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
-    "@types/node": "^7.0.29",
+    "@types/node": "^8.0.0",
     "@types/tape": "^4.2.30",
     "core-js": "^2.4.1",
     "cross-env": "^4.0.0",
