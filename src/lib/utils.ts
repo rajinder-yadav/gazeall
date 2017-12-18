@@ -24,7 +24,7 @@ let child_procs: ChildProcess[] = [];
  * @param {CommandOptions} cmd - The program arguments from commander module.
  * @return {void}
  */
-export function watchAndRun( cmd: CommandOptions ): void {
+export function watchAndRun( cmd: any ): void {
   if ( !cmd.args || cmd.args.length === 0 ) {
     console.log( "Nothing passed to watch, exiting!\nFor usage, type: gazeall --help." );
     process.exit( 0 );
