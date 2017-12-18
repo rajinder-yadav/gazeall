@@ -7,7 +7,7 @@ import { watchAndRun } from "./lib/utils";
  * Command options.
  */
 cmd
-  .version( "0.2.5" )
+  .version( "0.2.6" )
   .usage( "[options] <file ...>" )
   .option( "--run <commands>", "run commands then wait for changes to re-run." )
   .option( "--wait-first", "wait first, commands will run on changes." )
@@ -20,6 +20,6 @@ cmd
 /**
  * Start watching after delay interval or next event loop if value not provided.
  */
-setTimeout(() => {
+setTimeout( () => {
   watchAndRun( cmd );
 }, parseInt( cmd.delay ) || 0 );
