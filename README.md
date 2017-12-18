@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.2.5-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.2.6-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -17,8 +17,6 @@ _Gazeall_ watches files and folders for changes, then leaps to action and execut
 _Gazeall_ works both as a CLI tool and equally well running NPM scripts inside `package.json`.
 
 NPM Scripts can be run in parallel or synchronous mode.
-
-**Update**: I am currently considering adding support for watching process and doing something useful in this usage scenario. If you have ideas, open a issue labeled enhancements. Same applys for any other general ideas.
 
 ## Install
 
@@ -60,7 +58,7 @@ This will run the command and then start to watch file for changes to re-run com
 gazeall --run "node src/main.js" "src/**/*"
 ```
 
-### Wait first and run on changes
+### Wait first and run command on change
 
 ```sh
 gazeall --wait-first --run "node src/main.js" "src/**/*"
@@ -84,7 +82,6 @@ gazeall --run "node src/main.js" index.html src/*.js
 gazeall --run "tsc src/*.ts && node build/main.js" src/*
 ```
 
-
 ## NPM script examples
 
 For running NPM scripts, _gazeall_ can run scripts either in _parallel_ or _synchronous_.
@@ -96,7 +93,7 @@ _Note_: You may also use the `--wait-first` switch when running NPM scripts.
 
 ### Run NPM scripts in synchronous mode
 
-In sync mode, _gazeall_ will wait for the running command to complete before running the next command.
+In synchronous mode, _gazeall_ will wait for the running command to complete before running the next command.
 
 ```js
   "scripts": {
@@ -104,7 +101,7 @@ In sync mode, _gazeall_ will wait for the running command to complete before run
   }
 ```
 
-Here the build script runs on two folders and their sub-folders.
+Here the build script runs and _gazeall_ watches two folders and their sub-folders.
 
 ```js
   "scripts": {
@@ -114,7 +111,7 @@ Here the build script runs on two folders and their sub-folders.
 
 ### Run NPM scripts in parallel mode
 
-In parallel mode, all scripts execute one after the other without waiting for the last to complete.
+In parallel mode, all scripts execute one after the other without waiting.
 
 ```js
   "scripts": {
@@ -122,7 +119,7 @@ In parallel mode, all scripts execute one after the other without waiting for th
   }
 ```
 
-Build from two folders and their sub-folders.
+_gazeall_ runs NPM scripts and watch two folders and their sub-folders.
 
 ```js
   "scripts": {
