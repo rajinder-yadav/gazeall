@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
@@ -12,11 +12,10 @@
   "scripts": {
     "build": "cross-env NODE_ENV=prod tsc",
     "check": "tslint -t codeFrame \"src/**/*.ts\"",
-    "clean": "shx rm -rf build",
+    "clean": "shx rm -rf bin",
     "doc": "typedoc --module commonjs --target ES5 --ignoreCompilerErrors --exclude node_modules --out $npm_package_config_doc_folder src",
     "format": "tsfmt -r --baseDir ./",
     "node:debug": "node --inspect --debug-brk $npm_package_bin_gazeall",
-    "postbuild": "npm link",
     "prebuild": "run-s format check clean",
     "precommit": "run-s format check",
     "predoc": "shx rm -rf $npm_package_config_doc_folder && shx mkdir -p $npm_package_config_doc_folder",
@@ -40,24 +39,24 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
-    "@types/node": "^8.0.0",
-    "@types/tape": "^4.2.30",
-    "core-js": "^2.4.1",
-    "cross-env": "^5.0.0",
-    "cross-var": "^1.0.3",
-    "husky": "^0.14.0",
-    "npm-run-all": "^4.0.2",
+    "@types/node": "^8.5.1",
+    "@types/tape": "^4.2.31",
+    "core-js": "^2.5.3",
+    "cross-env": "^5.1.1",
+    "cross-var": "^1.1.0",
+    "husky": "^0.14.3",
+    "npm-run-all": "^4.1.2",
     "shx": "^0.2.2",
     "tap-summary": "^4.0.0",
-    "tape": "^4.6.3",
-    "tape-run": "^3.0.0",
-    "tslint": "^5.4.3",
-    "typedoc": "^0.6.0",
-    "typescript": "^2.3.4",
-    "typescript-formatter": "^6.0.0"
+    "tape": "^4.8.0",
+    "tape-run": "^3.0.1",
+    "tslint": "^5.8.0",
+    "typedoc": "^0.9.0",
+    "typescript": "^2.2.2",
+    "typescript-formatter": "^7.0.1"
   },
   "dependencies": {
-    "commander": "^2.9.0",
+    "commander": "^2.12.2",
     "gaze": "^1.1.2"
   }
 }
