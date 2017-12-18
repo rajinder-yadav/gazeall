@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.2.6-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.2.7-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -128,4 +128,3 @@ _gazeall_ runs NPM scripts and watch two folders and their sub-folders.
 ```
 
 _Note_: We make use of double quote and need to escape them, this is the best practice as single quotes can have problem when used on Windows.
-
