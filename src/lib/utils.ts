@@ -45,7 +45,7 @@ export function watchAndRun( cmd: CommandOptions ): void {
 
   gaze.on( "changed", ( file: string ) => {
     if ( child_procs ) {
-      child_procs.forEach(( proc: ChildProcess ) => {
+      child_procs.forEach( ( proc: ChildProcess ) => {
         proc.kill();
       } );
       child_procs = [];
@@ -68,14 +68,14 @@ function run( cmd: CommandOptions ): void {
 
   if ( cmd.runpNpm ) {
     const run_list: string[] = cmd.runpNpm.split( /\s+/ );
-    run_list.forEach(( command: string ) => {
+    run_list.forEach( ( command: string ) => {
       runNPMCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   }
 
   if ( cmd.runsNpm ) {
     const run_list: string[] = cmd.runsNpm.split( /\s+/ );
-    run_list.forEach(( command: string ) => {
+    run_list.forEach( ( command: string ) => {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   }
