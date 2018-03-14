@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.2.9 (2018-03-14)
+
+* NPM package update.
+
 ## 0.2.5 (2017-03-14)
 
 * Version bump to update README in NPM release.

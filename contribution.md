@@ -23,12 +23,13 @@ Supported compiled targets include: `ES3, ES5, ES6, ES2016, ES2017`
 
 See [compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) for more details.
 
-### Building
+### Building and Publishing
 
 To compile the TypeScript code, use the following command to start the build process:
 
-```
+```sh
 npm run build
+npm publish
 ```
 
 **Warning** - The `bin/` folder and all sub-folders within it will be deleted to insure a clean build is performed each time. Do not place any files you will need later!
@@ -41,10 +42,11 @@ To quickly test _gazeall_, type:
 mkdir -p /tmp/watch/log
 cd /tmp/watch
 touch index.html main.ts log/run.log
+npm i gazeall
 
 gvim
 
-gazeall --run "ls -l" "/tmp/watch/**/*"
+npx gazeall --run "ls -l" "/tmp/watch/**/*"
 ```
 
 From the editor make changes to each of the three files and make sure you see the `ls -l` command execute each time.
