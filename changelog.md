@@ -2,7 +2,7 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.2.9 (2018-03-14)
+## 0.2.10 (2018-03-14)
 
 * NPM package update.
 

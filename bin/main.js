@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var cmd = require("commander");
 var utils_1 = require("./lib/utils");
 cmd
-    .version("0.2.9")
+    .version("0.2.10")
     .usage("[options] <file ...>")
     .option("--run <commands>", "run commands then wait for changes to re-run.")
     .option("--wait-first", "wait first, commands will run on changes.")
