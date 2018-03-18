@@ -34,7 +34,7 @@ export function watchAndRun( cmd: any ): void {
   // Run using Node.js is only a single file passed.
   if ( !cmd.run && !cmd.runsNpm && !cmd.runpNpm ) {
     cmd.run = `node ${ cmd.args }`;
-    cmd.args = [ "**/*" ];
+    cmd.args = [ "**/*.js" ];
   }
 
   // Check if we run first or wait first.

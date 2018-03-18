@@ -11,7 +11,7 @@ function watchAndRun(cmd) {
     }
     if (!cmd.run && !cmd.runsNpm && !cmd.runpNpm) {
         cmd.run = "node " + cmd.args;
-        cmd.args = ["**/*"];
+        cmd.args = ["**/*.js"];
     }
     if (!cmd.waitFirst) {
         run(cmd);
