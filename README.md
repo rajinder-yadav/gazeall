@@ -61,7 +61,7 @@ gazeall main.js
 The above syntax is just shorthand for.
 
 ```sh
-gazeall --run "node main.js" "**/*"
+gazeall --run "node main.js" "**/*.js"
 ```
 
 ### Watch all files and sub-folders
