@@ -31,6 +31,12 @@ export function watchAndRun( cmd: any ): void {
     process.exit( 0 );
   }
 
+  // Run using Node.js is only a single file passed.
+  if ( !cmd.run && !cmd.runsNpm && !cmd.runpNpm ) {
+    cmd.run = `node ${ cmd.args }`;
+    cmd.args = [ "**/*" ];
+  }
+
   // Check if we run first or wait first.
   if ( !cmd.waitFirst ) {
     run( cmd );
@@ -64,6 +70,7 @@ export function watchAndRun( cmd: any ): void {
 function run( cmd: CommandOptions ): void {
   // Only one of the following with run.
   if ( cmd.run ) {
+    console.log( chalk.blue( `=> Running: ${ cmd.run }` ) );
     runCommand( cmd.run, cmd.haltOnError );
   } else if ( cmd.runpNpm ) {
     const run_list: string[] = cmd.runpNpm.split( /\s+/ );
@@ -75,11 +82,6 @@ function run( cmd: CommandOptions ): void {
     run_list.forEach( ( command: string ) => {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
-  } else {
-    console.log( chalk.blue( `=> Running: node ${ cmd.args }` ) );
-    const file: any = cmd.args;
-    cmd.args = [ "**/*" ];
-    runCommand( `node ${ file }`, cmd.haltOnError );
   }
 
 }

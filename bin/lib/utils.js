@@ -9,6 +9,10 @@ function watchAndRun(cmd) {
         console.log(chalk_1.default.red("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help."));
         process.exit(0);
     }
+    if (!cmd.run && !cmd.runsNpm && !cmd.runpNpm) {
+        cmd.run = "node " + cmd.args;
+        cmd.args = ["**/*"];
+    }
     if (!cmd.waitFirst) {
         run(cmd);
     }
@@ -26,6 +30,7 @@ function watchAndRun(cmd) {
 exports.watchAndRun = watchAndRun;
 function run(cmd) {
     if (cmd.run) {
+        console.log(chalk_1.default.blue("=> Running: " + cmd.run));
         runCommand(cmd.run, cmd.haltOnError);
     }
     else if (cmd.runpNpm) {
@@ -39,12 +44,6 @@ function run(cmd) {
         run_list.forEach(function (command) {
             runNPMSyncCommand("npm run " + command, cmd.haltOnError);
         });
-    }
-    else {
-        console.log(chalk_1.default.blue("=> Running: node " + cmd.args));
-        var file = cmd.args;
-        cmd.args = ["**/*"];
-        runCommand("node " + file, cmd.haltOnError);
     }
 }
 function runCommand(command, err_halt) {
