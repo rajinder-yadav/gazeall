@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var gaze_1 = require("gaze");
 var child_process_1 = require("child_process");
+var chalk_1 = require("chalk");
 var child_procs = [];
 function watchAndRun(cmd) {
     if (!cmd.args || cmd.args.length === 0) {
-        console.log("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help.");
+        console.log(chalk_1.default.red("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help."));
         process.exit(0);
     }
     if (!cmd.waitFirst) {
@@ -27,17 +28,23 @@ function run(cmd) {
     if (cmd.run) {
         runCommand(cmd.run, cmd.haltOnError);
     }
-    if (cmd.runpNpm) {
+    else if (cmd.runpNpm) {
         var run_list = cmd.runpNpm.split(/\s+/);
         run_list.forEach(function (command) {
             runNPMCommand("npm run " + command, cmd.haltOnError);
         });
     }
-    if (cmd.runsNpm) {
+    else if (cmd.runsNpm) {
         var run_list = cmd.runsNpm.split(/\s+/);
         run_list.forEach(function (command) {
             runNPMSyncCommand("npm run " + command, cmd.haltOnError);
         });
+    }
+    else {
+        console.log(chalk_1.default.blue("=> Running: node " + cmd.args));
+        var file = cmd.args;
+        cmd.args = ["**/*"];
+        runCommand("node " + file, cmd.haltOnError);
     }
 }
 function runCommand(command, err_halt) {
@@ -49,9 +56,9 @@ function runCommand(command, err_halt) {
         console.log(data.toString());
     });
     proc.stderr.on("data", function (data) {
-        console.log(data.toString());
+        console.log(chalk_1.default.red(data.toString()));
         if (err_halt) {
-            console.log("Error! Forked Child process terminating.");
+            console.log(chalk_1.default.red("Error! Forked Child process terminating."));
             process.exit(1);
         }
     });
@@ -62,7 +69,7 @@ function runNPMCommand(command, err_halt) {
             throw err;
         }
         if (stderr) {
-            console.log(stderr);
+            console.log(chalk_1.default.red(stderr));
             return;
         }
         if (stdout) {

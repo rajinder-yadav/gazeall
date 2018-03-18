@@ -1,5 +1,6 @@
 import { Gaze } from "gaze";
 import { exec, execSync, ChildProcess, spawn } from "child_process";
+import chalk from "chalk";
 
 /**
  * Command types
@@ -26,7 +27,7 @@ let child_procs: ChildProcess[] = [];
  */
 export function watchAndRun( cmd: any ): void {
   if ( !cmd.args || cmd.args.length === 0 ) {
-    console.log( "Nothing passed to watch, exiting!\nFor usage, type: gazeall --help." );
+    console.log( chalk.red( "Nothing passed to watch, exiting!\nFor usage, type: gazeall --help." ) );
     process.exit( 0 );
   }
 
@@ -40,7 +41,7 @@ export function watchAndRun( cmd: any ): void {
   // Uncomment for debugging
   // gaze.on( "ready", watcher => {
   //   const watched = gaze.watched();
-  //   console.log( watched );
+  //   console.log( chalk.magenta( watched ) );
   // } );
 
   gaze.on( "changed", ( file: string ) => {
@@ -64,21 +65,23 @@ function run( cmd: CommandOptions ): void {
   // Only one of the following with run.
   if ( cmd.run ) {
     runCommand( cmd.run, cmd.haltOnError );
-  }
-
-  if ( cmd.runpNpm ) {
+  } else if ( cmd.runpNpm ) {
     const run_list: string[] = cmd.runpNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
       runNPMCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
-  }
-
-  if ( cmd.runsNpm ) {
+  } else if ( cmd.runsNpm ) {
     const run_list: string[] = cmd.runsNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
+  } else {
+    console.log( chalk.blue( `=> Running: node ${ cmd.args }` ) );
+    const file: any = cmd.args;
+    cmd.args = [ "**/*" ];
+    runCommand( `node ${ file }`, cmd.haltOnError );
   }
+
 }
 
 /**
@@ -100,16 +103,16 @@ function runCommand( command: string, err_halt: boolean ): void {
   } );
 
   proc.stderr.on( "data", ( data: Buffer ) => {
-    console.log( data.toString() );
+    console.log( chalk.red( data.toString() ) );
     if ( err_halt ) {
-      console.log( "Error! Forked Child process terminating." );
+      console.log( chalk.red( "Error! Forked Child process terminating." ) );
       process.exit( 1 );
     }
   } );
 
   // Uncomment to debug process termination.
   // child_procs.on( "close", code => {
-  //   console.log( "TERMINATED: Child process." );
+  //   console.log( chalk.red( "TERMINATED: Child process." ) );
   // } );
 }
 
@@ -128,7 +131,7 @@ function runNPMCommand( command: string, err_halt: boolean ): void {
         throw err;
       }
       if ( stderr ) {
-        console.log( stderr );
+        console.log( chalk.red( stderr ) );
         return;
       }
       if ( stdout ) {

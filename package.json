@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
@@ -39,6 +39,7 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/node": "^9.4.7",
     "@types/tape": "^4.2.32",
     "core-js": "^2.5.3",
