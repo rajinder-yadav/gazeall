@@ -31,12 +31,6 @@ export function watchAndRun( cmd: any ): void {
     process.exit( 0 );
   }
 
-  // Run using Node.js is only a single file passed.
-  if ( !cmd.run && !cmd.runsNpm && !cmd.runpNpm ) {
-    cmd.run = `node ${ cmd.args }`;
-    cmd.args = [ "**/*.js" ];
-  }
-
   // Check if we run first or wait first.
   if ( !cmd.waitFirst ) {
     run( cmd );
@@ -82,6 +76,9 @@ function run( cmd: CommandOptions ): void {
     run_list.forEach( ( command: string ) => {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
+  } else {
+    console.log( chalk.blue( `=> Running: node ${ cmd.args }` ) );
+    runCommand( `node ${ cmd.args }`, cmd.haltOnError );
   }
 
 }
