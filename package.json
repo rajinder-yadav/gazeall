@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
@@ -42,7 +42,6 @@
     "@types/chalk": "^2.2.0",
     "@types/node": "^9.6.0",
     "@types/tape": "^4.2.32",
-    "chalk": "^2.3.2",
     "core-js": "^2.5.3",
     "cross-env": "^5.1.4",
     "cross-var": "^1.1.0",
@@ -58,6 +57,7 @@
     "typescript-formatter": "^7.1.0"
   },
   "dependencies": {
+    "chalk": "^2.3.2",
     "commander": "^2.15.1",
     "gaze": "^1.1.2"
   }

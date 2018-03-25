@@ -2,7 +2,7 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.3.6 (2018-03-24)
+## 0.3.7 (2018-03-24)
 
 - Bug fix, fixed slow start for Node.js mode, now runs code immediately.
 
