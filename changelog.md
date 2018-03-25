@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.3.4 (2018-03-24)
+
+- Bug fix, fixed slow start for Node.js mode, now runs code immediately.
+
 ## 0.3.3 (2018-03-17)
 
 - Added support to run a JavaScript file using Node.js and watch for all file changes.
