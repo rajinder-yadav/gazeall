@@ -50,7 +50,7 @@
     "shx": "^0.2.2",
     "tap-summary": "^4.0.0",
     "tape": "^4.9.0",
-    "tape-run": "^3.0.4",
+    "tape-run": "^4.0.0",
     "tslint": "^5.9.1",
     "typedoc": "^0.11.1",
     "typescript": "^2.7.2",
