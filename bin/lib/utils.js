@@ -14,16 +14,31 @@ function watchAndRun(cmd) {
     }
     var gaze = new gaze_1.Gaze(cmd.args);
     gaze.on("changed", function (file) {
-        if (child_procs) {
-            child_procs.forEach(function (proc) {
-                proc.kill();
-            });
-            child_procs = [];
-        }
+        terminateChildProcs();
         run(cmd);
+    });
+    process.on("SIGINT", function () {
+        terminateChildProcs();
+        process.exit(0);
+    });
+    process.on("SIGTERM", function () {
+        terminateChildProcs();
+        process.exit(0);
+    });
+    process.on("SIGQUIT", function () {
+        terminateChildProcs();
+        process.exit(0);
     });
 }
 exports.watchAndRun = watchAndRun;
+function terminateChildProcs() {
+    if (child_procs) {
+        child_procs.forEach(function (proc) {
+            proc.kill();
+        });
+        child_procs = [];
+    }
+}
 function run(cmd) {
     if (cmd.run) {
         console.log(chalk_1.default.blue("=> Running: " + cmd.run));

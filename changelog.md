@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.4.0 (2018-04-18)
+
+- Added fix to terminate lingering child processes when Gazeall is stopped using the keyboard.
+
 ## 0.3.7 (2018-03-24)
 
 - Bug fix, fixed slow start for Node.js mode, now runs code immediately.

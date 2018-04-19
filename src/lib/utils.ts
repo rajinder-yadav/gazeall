@@ -45,15 +45,37 @@ export function watchAndRun( cmd: any ): void {
   // } );
 
   gaze.on( "changed", ( file: string ) => {
-    if ( child_procs ) {
-      child_procs.forEach( ( proc: ChildProcess ) => {
-        proc.kill();
-      } );
-      child_procs = [];
-    }
+    terminateChildProcs();
     run( cmd );
   } );
 
+  process.on( "SIGINT", () => {
+    terminateChildProcs();
+    process.exit( 0 );
+  } );
+
+  process.on( "SIGTERM", () => {
+    terminateChildProcs();
+    process.exit( 0 );
+  } );
+
+  process.on( "SIGQUIT", () => {
+    terminateChildProcs();
+    process.exit( 0 );
+  } );
+
+}
+
+/**
+ * Clean up lingering child processes when User stops Gazeall using keyboard.
+ */
+function terminateChildProcs() {
+  if ( child_procs ) {
+    child_procs.forEach( ( proc: ChildProcess ) => {
+      proc.kill();
+    } );
+    child_procs = [];
+  }
 }
 
 /**

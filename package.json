@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
@@ -21,8 +21,7 @@
     "predoc": "shx rm -rf $npm_package_config_doc_folder && shx mkdir -p $npm_package_config_doc_folder",
     "prepush": "run-s test",
     "pretest": "run-s build",
-    "test": "tape \"bin/**/*/test.*.js\"|tap-summary",
-    "tsc": "tsc"
+    "test": "tape \"bin/**/*/test.*.js\"|tap-summary"
   },
   "keywords": [
     "javascript",
