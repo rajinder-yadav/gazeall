@@ -66,6 +66,9 @@ function runCommand(command, err_halt) {
     var cmd = args.shift();
     var proc = child_process_1.spawn(cmd, args, { detached: true });
     child_procs.push(proc);
+    proc.on("exit", function (code) {
+        console.log(chalk_1.default.gray("Process exited with code: " + code));
+    });
     proc.stdout.on("data", function (data) {
         console.log(data.toString());
     });
@@ -89,6 +92,9 @@ function runNPMCommand(command, err_halt) {
         if (stdout) {
             console.log(stdout);
         }
+    });
+    proc.on("exit", function (code) {
+        console.log(chalk_1.default.gray("Process exited with code: " + code));
     });
     child_procs.push(proc);
 }

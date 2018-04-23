@@ -91,11 +91,13 @@ function run( cmd: CommandOptions ): void {
   } else if ( cmd.runpNpm ) {
     const run_list: string[] = cmd.runpNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
+      // console.log( chalk.blue( `=> Running: npm run ${ command }` ) );
       runNPMCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   } else if ( cmd.runsNpm ) {
     const run_list: string[] = cmd.runsNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
+      // console.log( chalk.blue( `=> Running: npm run ${ command }` ) );
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   } else {
@@ -118,6 +120,10 @@ function runCommand( command: string, err_halt: boolean ): void {
   const cmd: string = args.shift();
   const proc: ChildProcess = spawn( cmd, args, { detached: true } );
   child_procs.push( proc );
+
+  proc.on( "exit", code => {
+    console.log( chalk.gray( `Process exited with code: ${ code }` ) );
+  } );
 
   proc.stdout.on( "data", ( data: Buffer ) => {
     console.log( data.toString() );
@@ -159,6 +165,10 @@ function runNPMCommand( command: string, err_halt: boolean ): void {
         console.log( stdout );
       }
     } ); // exec
+
+  proc.on( "exit", code => {
+    console.log( chalk.gray( `Process exited with code: ${ code }` ) );
+  } );
   child_procs.push( proc );
 }
 
