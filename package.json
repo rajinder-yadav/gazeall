@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
-    "@types/node": "^9.6.0",
+    "@types/node": "^10.0.3",
     "@types/tape": "^4.2.32",
     "core-js": "^2.5.3",
     "cross-env": "^5.1.4",
