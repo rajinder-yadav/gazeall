@@ -45,36 +45,37 @@ export function watchAndRun( cmd: any ): void {
   // } );
 
   gaze.on( "changed", ( file: string ) => {
-    terminateChildProcs();
+    stopRunningProcess( child_procs );
+    child_procs = [];
     run( cmd );
-  } );
-
-  process.on( "SIGINT", () => {
-    terminateChildProcs();
-    process.exit( 0 );
-  } );
-
-  process.on( "SIGTERM", () => {
-    terminateChildProcs();
-    process.exit( 0 );
-  } );
-
-  process.on( "SIGQUIT", () => {
-    terminateChildProcs();
-    process.exit( 0 );
   } );
 
 }
 
 /**
- * Clean up lingering child processes when User stops Gazeall using keyboard.
+ * Output error message to terminal.
+ * @param err {Error|string} - Error message to be shown.
+ * @return {void}
  */
-function terminateChildProcs() {
-  if ( child_procs ) {
-    child_procs.forEach( ( proc: ChildProcess ) => {
+function displayErrorMessage( err: Error | string ) {
+  if ( err instanceof Error ) {
+    process.stderr.write( chalk.red( err.message ) );
+  } else {
+    process.stderr.write( chalk.red( err ) );
+  }
+  process.stderr.write( "\n" );
+}
+
+/**
+ * Stop running processes.
+ * @param procs {ChildProcess} - List of running processes.
+ * @return {void}
+ */
+function stopRunningProcess( procs: ChildProcess[] ) {
+  if ( procs && procs.length > 0 ) {
+    procs.forEach( ( proc: ChildProcess ) => {
       proc.kill();
     } );
-    child_procs = [];
   }
 }
 
@@ -84,23 +85,25 @@ function terminateChildProcs() {
  * @return {void}
  */
 function run( cmd: CommandOptions ): void {
-  // Only one of the following with run.
+  // Only one of the following should run.
   if ( cmd.run ) {
+    // Run User supplied command.
     console.log( chalk.blue( `=> Running: ${ cmd.run }` ) );
     runCommand( cmd.run, cmd.haltOnError );
   } else if ( cmd.runpNpm ) {
+    // Run NPM scripts in parallel.
     const run_list: string[] = cmd.runpNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
-      // console.log( chalk.blue( `=> Running: npm run ${ command }` ) );
       runNPMCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   } else if ( cmd.runsNpm ) {
+    // Run NPM scripts in sequence.
     const run_list: string[] = cmd.runsNpm.split( /\s+/ );
     run_list.forEach( ( command: string ) => {
-      // console.log( chalk.blue( `=> Running: npm run ${ command }` ) );
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   } else {
+    // Run file using Node.js
     console.log( chalk.blue( `=> Running: node ${ cmd.args }` ) );
     runCommand( `node ${ cmd.args }`, cmd.haltOnError );
   }
@@ -121,18 +124,15 @@ function runCommand( command: string, err_halt: boolean ): void {
   const proc: ChildProcess = spawn( cmd, args, { detached: true } );
   child_procs.push( proc );
 
-  proc.on( "exit", code => {
-    console.log( chalk.gray( `Process exited with code: ${ code }` ) );
-  } );
-
   proc.stdout.on( "data", ( data: Buffer ) => {
-    console.log( data.toString() );
+    process.stdout.write( data.toString() );
   } );
 
   proc.stderr.on( "data", ( data: Buffer ) => {
-    console.log( chalk.red( data.toString() ) );
+    displayErrorMessage( data.toString() );
     if ( err_halt ) {
-      console.log( chalk.red( "Error! Forked Child process terminating." ) );
+      stopRunningProcess( child_procs );
+      process.stderr.write( chalk.red( "Error! Forked Child process terminating.\n" ) );
       process.exit( 1 );
     }
   } );
@@ -155,20 +155,22 @@ function runNPMCommand( command: string, err_halt: boolean ): void {
   const proc: ChildProcess =
     exec( command, ( err, stdout, stderr ) => {
       if ( err && err_halt ) {
-        throw err;
+        displayErrorMessage( stderr );
+        stopRunningProcess( child_procs );
+        process.exit( 1 );
       }
       if ( stderr ) {
-        console.log( chalk.red( stderr ) );
+        displayErrorMessage( stderr );
+        if ( err_halt ) {
+          stopRunningProcess( child_procs );
+          process.exit( 1 );
+        }
         return;
       }
       if ( stdout ) {
-        console.log( stdout );
+        process.stdout.write( stdout );
       }
     } ); // exec
-
-  proc.on( "exit", code => {
-    console.log( chalk.gray( `Process exited with code: ${ code }` ) );
-  } );
   child_procs.push( proc );
 }
 
@@ -184,11 +186,13 @@ function runNPMSyncCommand( command: string, err_halt: boolean ): void {
   try {
     const out: Buffer | String = execSync( command );
     if ( out ) {
-      console.log( out.toString() );
+      process.stdout.write( out.toString() );
     }
   } catch ( err ) {
+    displayErrorMessage( err );
     if ( err_halt ) {
-      throw err;
+      stopRunningProcess( child_procs );
+      process.exit( 1 );
     }
   }
 }

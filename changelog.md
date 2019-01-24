@@ -2,13 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.5.0 (2018-04-22)
+## 0.3.8 (2019-01-24)
 
-- Logging exit code of spawned child process.
-
-## 0.4.0 (2018-04-18)
-
-- Added fix to terminate lingering child processes when Gazeall is stopped using the keyboard.
+- Swithced to using process.stdout for child process output to eliminate the extra newline.
+- Updated NPM modules.
 
 ## 0.3.7 (2018-03-24)
 

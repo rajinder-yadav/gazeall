@@ -7,12 +7,12 @@ import { watchAndRun } from "./lib/utils";
  * Command options.
  */
 cmd
-  .version( "0.5.0", "-v, --version" )
-  .usage( "[options] <file ...>" )
+  .version( "0.3.7", "-v, --version" )
+  .usage( "[options] <files ...>" )
   .option( "--run <commands>", "run commands then wait for changes to re-run." )
   .option( "--wait-first", "wait first, commands will run on changes." )
-  .option( "--runp-npm <scripts>", "npm scripts to run parallel." )
-  .option( "--runs-npm <scripts>", "npm scripts to run synchronous." )
+  .option( "--runp-npm <scripts>", "NPM scripts to run parallel." )
+  .option( "--runs-npm <scripts>", "NPM scripts to run synchronous." )
   .option( "--delay <ms>", "start delay value in milliseconds." )
   .option( "--halt-on-error", "halt on error." )
   .parse( process.argv );

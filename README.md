@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.5.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.5.1-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -14,7 +14,7 @@ This project was developed in TypeScript with the help of [TSCLI](https://www.np
 
 _Gazeall_ watches files and folders for changes, then leaps to action and executes a command.
 
-_Gazeall_ works both as a CLI tool and equally well running NPM scripts inside `package.json`.
+_Gazeall_ works both as a CLI tool and equally well running NPM scripts inside "__package.json__".
 
 NPM Scripts can be run in parallel or synchronous mode.
 
@@ -29,18 +29,17 @@ npm -g install gazeall
 ```sh
 $ gazeall --help
 
-  Usage: gazeall [options] <file ...>
+Usage: gazeall [options] <files ...>
 
-  Options:
-
-    -h, --help            output usage information
-    -v, --version         output the version number
-    --run <commands>      run commands then wait for changes to re-run.
-    --wait-first          wait first, commands will run on changes.
-    --runp-npm <scripts>  npm scripts to run parallel.
-    --runs-npm <scripts>  npm scripts to run synchronous.
-    --delay <ms>          start delay value in milliseconds.
-    --halt-on-error       halt on error.
+Options:
+  -v, --version         output the version number
+  --run <commands>      run commands then wait for changes to re-run.
+  --wait-first          wait first, commands will run on changes.
+  --runp-npm <scripts>  NPM scripts to run parallel.
+  --runs-npm <scripts>  NPM scripts to run synchronous.
+  --delay <ms>          start delay value in milliseconds.
+  --halt-on-error       halt on error.
+  -h, --help            output usage information
 ```
 
 ## CLI Examples
@@ -52,7 +51,7 @@ The examples below show various ways to run _gazeall_ from the command line.
 
 ### Run in Node.js watch mode
 
-Running a JavaScript file using Node.js and watching for all file changes.
+Running a JavaScript file using Node.js and watching for all JavaScript file changes in the current folder and all sub-folders.
 
 ```sh
 gazeall main.js
@@ -72,13 +71,23 @@ This will run the command and then start to watch file for changes to re-run com
 gazeall --run "node src/main.js" "src/**/*"
 ```
 
+### Watch all files under multiple sub-folders
+
+This will run the command and then start to watch file for changes to re-run command.
+
+```sh
+gazeall --run "node src/main.js" "src/**/*" "libs/**/*"
+```
+
 ### Wait first and run command on change
 
 ```sh
 gazeall --wait-first --run "node src/main.js" "src/**/*"
 ```
 
-### Target specific files
+### Target specific files to watch
+
+Files are separated by a space.
 
 ```sh
 gazeall --run "node src/main.js" index.html src/main.js
@@ -91,6 +100,8 @@ gazeall --run "node src/main.js" index.html src/*.js
 ```
 
 ### Running multiple commands
+
+Multiple commands are chained using "&&" and surrounded with quotes.
 
 ```sh
 gazeall --run "tsc src/*.ts && node build/main.js" src/*
@@ -133,7 +144,7 @@ In parallel mode, all scripts execute one after the other without waiting.
   }
 ```
 
-_gazeall_ runs NPM scripts and watch two folders and their sub-folders.
+_gazeall_ runs NPM scripts and watches two folders and their sub-folders.
 
 ```js
   "scripts": {

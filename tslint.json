@@ -14,7 +14,6 @@
     "no-shadowed-variable": true,
     "no-var-keyword": true,
     "switch-default": true,
-    "typeof-compare": true,
     "eofline": true,
     "linebreak-style": [true, "LF"],
     "no-require-imports": true,

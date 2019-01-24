@@ -14,29 +14,26 @@ function watchAndRun(cmd) {
     }
     var gaze = new gaze_1.Gaze(cmd.args);
     gaze.on("changed", function (file) {
-        terminateChildProcs();
+        stopRunningProcess(child_procs);
+        child_procs = [];
         run(cmd);
-    });
-    process.on("SIGINT", function () {
-        terminateChildProcs();
-        process.exit(0);
-    });
-    process.on("SIGTERM", function () {
-        terminateChildProcs();
-        process.exit(0);
-    });
-    process.on("SIGQUIT", function () {
-        terminateChildProcs();
-        process.exit(0);
     });
 }
 exports.watchAndRun = watchAndRun;
-function terminateChildProcs() {
-    if (child_procs) {
-        child_procs.forEach(function (proc) {
+function displayErrorMessage(err) {
+    if (err instanceof Error) {
+        process.stderr.write(chalk_1.default.red(err.message));
+    }
+    else {
+        process.stderr.write(chalk_1.default.red(err));
+    }
+    process.stderr.write("\n");
+}
+function stopRunningProcess(procs) {
+    if (procs && procs.length > 0) {
+        procs.forEach(function (proc) {
             proc.kill();
         });
-        child_procs = [];
     }
 }
 function run(cmd) {
@@ -66,16 +63,14 @@ function runCommand(command, err_halt) {
     var cmd = args.shift();
     var proc = child_process_1.spawn(cmd, args, { detached: true });
     child_procs.push(proc);
-    proc.on("exit", function (code) {
-        console.log(chalk_1.default.gray("Process exited with code: " + code));
-    });
     proc.stdout.on("data", function (data) {
-        console.log(data.toString());
+        process.stdout.write(data.toString());
     });
     proc.stderr.on("data", function (data) {
-        console.log(chalk_1.default.red(data.toString()));
+        displayErrorMessage(data.toString());
         if (err_halt) {
-            console.log(chalk_1.default.red("Error! Forked Child process terminating."));
+            stopRunningProcess(child_procs);
+            process.stderr.write(chalk_1.default.red("Error! Forked Child process terminating.\n"));
             process.exit(1);
         }
     });
@@ -83,18 +78,21 @@ function runCommand(command, err_halt) {
 function runNPMCommand(command, err_halt) {
     var proc = child_process_1.exec(command, function (err, stdout, stderr) {
         if (err && err_halt) {
-            throw err;
+            displayErrorMessage(stderr);
+            stopRunningProcess(child_procs);
+            process.exit(1);
         }
         if (stderr) {
-            console.log(chalk_1.default.red(stderr));
+            displayErrorMessage(stderr);
+            if (err_halt) {
+                stopRunningProcess(child_procs);
+                process.exit(1);
+            }
             return;
         }
         if (stdout) {
-            console.log(stdout);
+            process.stdout.write(stdout);
         }
-    });
-    proc.on("exit", function (code) {
-        console.log(chalk_1.default.gray("Process exited with code: " + code));
     });
     child_procs.push(proc);
 }
@@ -102,12 +100,14 @@ function runNPMSyncCommand(command, err_halt) {
     try {
         var out = child_process_1.execSync(command);
         if (out) {
-            console.log(out.toString());
+            process.stdout.write(out.toString());
         }
     }
     catch (err) {
+        displayErrorMessage(err);
         if (err_halt) {
-            throw err;
+            stopRunningProcess(child_procs);
+            process.exit(1);
         }
     }
 }
