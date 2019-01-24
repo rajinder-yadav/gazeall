@@ -65,7 +65,7 @@ gazeall --run "node main.js" "**/*.js"
 
 ### Run using Node.js with a NPM script
 
-If you project has a "__package.json__" file, and gazeall is run without any arguments from a NPM script like this:
+If your project has a "__package.json__" file, and gazeall is run without any arguments from a NPM script like this:
 
 {
   ...
