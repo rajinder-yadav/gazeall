@@ -7,8 +7,8 @@ import { watchAndRun } from "./lib/utils";
  * Command options.
  */
 cmd
-  .version( "0.3.7", "-v, --version" )
-  .usage( "[options] <files ...>" )
+  .version( "0.6.0", "-v, --version" )
+  .usage( "[options] [file,...]" )
   .option( "--run <commands>", "run commands then wait for changes to re-run." )
   .option( "--wait-first", "wait first, commands will run on changes." )
   .option( "--runp-npm <scripts>", "NPM scripts to run parallel." )

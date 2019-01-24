@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.5.1-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.6.0-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -21,7 +21,7 @@ NPM Scripts can be run in parallel or synchronous mode.
 ## Install
 
 ```sh
-npm -g install gazeall
+npm install gazeall
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ npm -g install gazeall
 ```sh
 $ gazeall --help
 
-Usage: gazeall [options] <files ...>
+Usage: gazeall [options] [file, ...]
 
 Options:
   -v, --version         output the version number
@@ -49,7 +49,7 @@ The examples below show various ways to run _gazeall_ from the command line.
 1. Make sure to place command inside quotes if options are passed or there are multiple commands.
 1. When using globs to recurse into sub-folders, make sure to put them inside quotes.
 
-### Run in Node.js watch mode
+### Run using Node.js
 
 Running a JavaScript file using Node.js and watching for all JavaScript file changes in the current folder and all sub-folders.
 
@@ -62,6 +62,31 @@ The above syntax is just shorthand for.
 ```sh
 gazeall --run "node main.js" "**/*.js"
 ```
+
+### Run using Node.js with a NPM script
+
+If you project has a "__package.json__" file, and gazeall is run without any arguments from a NPM script like this:
+
+{
+  ...
+  "main": "server.js",
+  "scripts": {
+    "start": "gazeall"
+  },
+  ...
+}
+
+When "npm start" is typed in the Terminal, gazeall will use the program name from the field "main" specified in package.json.
+
+The same execution logic will be used if you type, "__npx gazeall__" in the Terminal from the root folder of the project.
+
+The above syntax are just shorthand for.
+
+```sh
+gazeall --run "node ${main}" "**/*.js"
+```
+
+Where "${main}" is the value of the field main, in this example it is, "server.js".
 
 ### Watch all files and sub-folders
 

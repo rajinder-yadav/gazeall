@@ -2,7 +2,13 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.3.8 (2019-01-24)
+## 0.6.0 (2019-01-24)
+
+- Now when no filename is provided, package.json is used to determine the program to run using Node.js.
+- Displaying what files are being watched in the output.
+- Fixed version number in help Usage output.
+
+## 0.5.2 (2019-01-24)
 
 - Swithced to using process.stdout for child process output to eliminate the extra newline.
 - Updated NPM modules.

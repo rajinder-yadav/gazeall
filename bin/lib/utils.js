@@ -1,13 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var path = require("path");
+var fs = require("fs");
 var gaze_1 = require("gaze");
 var child_process_1 = require("child_process");
 var chalk_1 = require("chalk");
 var child_procs = [];
 function watchAndRun(cmd) {
-    if (!cmd.args || cmd.args.length === 0) {
-        console.log(chalk_1.default.red("Nothing passed to watch, exiting!\nFor usage, type: gazeall --help."));
-        process.exit(0);
+    try {
+        if (!cmd.args || cmd.args.length === 0) {
+            cmd.args = "**/*.js";
+        }
+        if (!cmd.run) {
+            var file = path.join(process.cwd(), "package.json");
+            var stats = fs.statSync(file);
+            if (stats.isFile()) {
+                var data = fs.readFileSync(file);
+                var package_json = JSON.parse(data.toString());
+                if (!package_json.main || package_json.main === "") {
+                    throw new Error("Field main is missing or empty in package.json");
+                }
+                stats = fs.statSync(package_json.main);
+                if (!stats.isFile()) {
+                    throw new Error("File " + package_json.main + " not found.");
+                }
+                cmd.run = "node " + package_json.main;
+            }
+        }
+    }
+    catch (err) {
+        console.log(chalk_1.default.red("Failed to provide a command to execute."));
+        console.log(chalk_1.default.red(err.message));
+        process.exit(1);
     }
     if (!cmd.waitFirst) {
         run(cmd);
@@ -38,7 +62,7 @@ function stopRunningProcess(procs) {
 }
 function run(cmd) {
     if (cmd.run) {
-        console.log(chalk_1.default.blue("=> Running: " + cmd.run));
+        console.log(chalk_1.default.blue("=> Running: " + cmd.run + ", watching " + cmd.args));
         runCommand(cmd.run, cmd.haltOnError);
     }
     else if (cmd.runpNpm) {
@@ -54,8 +78,8 @@ function run(cmd) {
         });
     }
     else {
-        console.log(chalk_1.default.blue("=> Running: node " + cmd.args));
-        runCommand("node " + cmd.args, cmd.haltOnError);
+        console.log(chalk_1.default.red("Something went wrong, exiting!"));
+        process.exit(1);
     }
 }
 function runCommand(command, err_halt) {

@@ -1,6 +1,12 @@
+"use strict";
+
+import * as path from "path";
+import * as fs from "fs";
+
 import { Gaze } from "gaze";
 import { exec, execSync, ChildProcess, spawn } from "child_process";
 import chalk from "chalk";
+// import { config } from "shelljs";
 
 /**
  * Command types
@@ -26,9 +32,43 @@ let child_procs: ChildProcess[] = [];
  * @return {void}
  */
 export function watchAndRun( cmd: any ): void {
-  if ( !cmd.args || cmd.args.length === 0 ) {
-    console.log( chalk.red( "Nothing passed to watch, exiting!\nFor usage, type: gazeall --help." ) );
-    process.exit( 0 );
+
+  try {
+    /**
+     * If no watch file(s) provided, watch all *.js files in the
+     * current folder and all sub-folders.
+     */
+    if ( !cmd.args || cmd.args.length === 0 ) {
+      cmd.args = "**/*.js";
+    }
+    /**
+     * If no filename provided, try to read filename from package.json
+     * The field "main" will be used as the file to execute using Node.js.
+     */
+    if ( !cmd.run ) {
+      const file = path.join( process.cwd(), "package.json" );
+      let stats = fs.statSync( file );
+
+      if ( stats.isFile() ) {
+        const data = fs.readFileSync( file );
+        const package_json = JSON.parse( data.toString() );
+
+        if ( !package_json.main || package_json.main === "" ) {
+          throw new Error( "Field main is missing or empty in package.json" );
+        }
+
+        stats = fs.statSync( package_json.main );
+
+        if ( !stats.isFile() ) {
+          throw new Error( `File ${ package_json.main } not found.` );
+        }
+        cmd.run = `node ${ package_json.main }`;
+      }
+    }
+  } catch ( err ) {
+    console.log( chalk.red( "Failed to provide a command to execute." ) );
+    console.log( chalk.red( err.message ) );
+    process.exit( 1 );
   }
 
   // Check if we run first or wait first.
@@ -88,7 +128,7 @@ function run( cmd: CommandOptions ): void {
   // Only one of the following should run.
   if ( cmd.run ) {
     // Run User supplied command.
-    console.log( chalk.blue( `=> Running: ${ cmd.run }` ) );
+    console.log( chalk.blue( `=> Running: ${ cmd.run }, watching ${ cmd.args }` ) );
     runCommand( cmd.run, cmd.haltOnError );
   } else if ( cmd.runpNpm ) {
     // Run NPM scripts in parallel.
@@ -103,9 +143,9 @@ function run( cmd: CommandOptions ): void {
       runNPMSyncCommand( `npm run ${ command }`, cmd.haltOnError );
     } );
   } else {
-    // Run file using Node.js
-    console.log( chalk.blue( `=> Running: node ${ cmd.args }` ) );
-    runCommand( `node ${ cmd.args }`, cmd.haltOnError );
+    // Should never get here.
+    console.log( chalk.red( "Something went wrong, exiting!" ) );
+    process.exit( 1 );
   }
 
 }
