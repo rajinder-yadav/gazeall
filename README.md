@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.6.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.6.1-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -49,24 +49,25 @@ The examples below show various ways to run _gazeall_ from the command line.
 1. Make sure to place command inside quotes if options are passed or there are multiple commands.
 1. When using globs to recurse into sub-folders, make sure to put them inside quotes.
 
-### Run using Node.js
+### Run a program using Node.js
 
-Running a JavaScript file using Node.js and watching for all JavaScript file changes in the current folder and all sub-folders.
-
-```sh
-gazeall main.js
-```
-
-The above syntax is just shorthand for.
+To run a JavaScript file using Node.js and have gazeall monitor all JavaScript file for changes in the current folder and all sub-folders, type the following.
 
 ```sh
-gazeall --run "node main.js" "**/*.js"
+npx gazeall main.js
 ```
 
-### Run using Node.js with a NPM script
+The above syntax is just shorthand for:
+
+```sh
+npx gazeall --run "node main.js" "**/*.js"
+```
+
+### Run a program using Node.js from a NPM script
 
 If your project has a "__package.json__" file, and gazeall is run without any arguments from a NPM script like this:
 
+```json
 {
   ...
   "main": "server.js",
@@ -75,25 +76,26 @@ If your project has a "__package.json__" file, and gazeall is run without any ar
   },
   ...
 }
+```
 
 When "npm start" is typed in the Terminal, gazeall will use the program name from the field "main" specified in package.json.
 
-The same execution logic will be used if you type, "__npx gazeall__" in the Terminal from the root folder of the project.
+The same execution logic will be used if you also type, "__npx gazeall__" in the Terminal from the root folder of the project.
 
-The above syntax are just shorthand for.
+The above syntax are just shorthand for:
 
 ```sh
 gazeall --run "node ${main}" "**/*.js"
 ```
 
-Where "${main}" is the value of the field main, in this example it is, "server.js".
+Where "${main}" is the value of the field main ("server.js" in this example).
 
 ### Watch all files and sub-folders
 
 This will run the command and then start to watch file for changes to re-run command.
 
 ```sh
-gazeall --run "node src/main.js" "src/**/*"
+npx gazeall --run "node src/main.js" "src/**/*"
 ```
 
 ### Watch all files under multiple sub-folders
@@ -101,13 +103,13 @@ gazeall --run "node src/main.js" "src/**/*"
 This will run the command and then start to watch file for changes to re-run command.
 
 ```sh
-gazeall --run "node src/main.js" "src/**/*" "libs/**/*"
+npx gazeall --run "node src/main.js" "src/**/*" "libs/**/*"
 ```
 
 ### Wait first and run command on change
 
 ```sh
-gazeall --wait-first --run "node src/main.js" "src/**/*"
+npx gazeall --wait-first --run "node src/main.js" "src/**/*"
 ```
 
 ### Target specific files to watch
@@ -115,13 +117,13 @@ gazeall --wait-first --run "node src/main.js" "src/**/*"
 Files are separated by a space.
 
 ```sh
-gazeall --run "node src/main.js" index.html src/main.js
+npx gazeall --run "node src/main.js" index.html src/main.js
 ```
 
 ### Target all JavaScript files under a folder
 
 ```sh
-gazeall --run "node src/main.js" index.html src/*.js
+npx gazeall --run "node src/main.js" index.html src/*.js
 ```
 
 ### Running multiple commands
@@ -129,7 +131,7 @@ gazeall --run "node src/main.js" index.html src/*.js
 Multiple commands are chained using "&&" and surrounded with quotes.
 
 ```sh
-gazeall --run "tsc src/*.ts && node build/main.js" src/*
+npx gazeall --run "tsc src/*.ts && node build/main.js" src/*
 ```
 
 ## NPM script examples
