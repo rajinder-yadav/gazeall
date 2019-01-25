@@ -20,8 +20,8 @@ function watchAndRun(cmd) {
             var file = path.join(process.cwd(), "package.json");
             var stats = fs.statSync(file);
             if (stats.isFile()) {
-                var data = fs.readFileSync(file);
-                var package_json = JSON.parse(data.toString());
+                var data = fs.readFileSync(file, "utf8");
+                var package_json = JSON.parse(data);
                 if (!package_json.main || package_json.main === "") {
                     throw new Error("Field main is missing or empty in package.json");
                 }
@@ -70,7 +70,7 @@ function stopRunningProcess(procs) {
 }
 function run(cmd) {
     if (cmd.run) {
-        console.log(chalk_1.default.blue("=> Running: " + cmd.run + ", watching " + cmd.args));
+        console.log(chalk_1.default.blue("=> Executing: " + cmd.run + ", watching " + cmd.args));
         runCommand(cmd.run, cmd.haltOnError);
     }
     else if (cmd.runpNpm) {
@@ -86,7 +86,7 @@ function run(cmd) {
         });
     }
     else {
-        console.log(chalk_1.default.red("Something went wrong, exiting!"));
+        console.log(chalk_1.default.red("=> Error: Something went wrong, exiting!"));
         process.exit(1);
     }
 }
@@ -102,9 +102,12 @@ function runCommand(command, err_halt) {
         displayErrorMessage(data.toString());
         if (err_halt) {
             stopRunningProcess(child_procs);
-            process.stderr.write(chalk_1.default.red("Error! Forked Child process terminating.\n"));
+            process.stderr.write(chalk_1.default.red("=> Error: Process terminating.\n"));
             process.exit(1);
         }
+    });
+    proc.on("close", function (code) {
+        console.log(chalk_1.default.grey("=> Execution completed."));
     });
 }
 function runNPMCommand(command, err_halt) {

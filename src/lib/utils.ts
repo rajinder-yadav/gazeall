@@ -56,8 +56,8 @@ export function watchAndRun( cmd: any ): void {
       let stats = fs.statSync( file );
 
       if ( stats.isFile() ) {
-        const data = fs.readFileSync( file );
-        const package_json = JSON.parse( data.toString() );
+        const data = fs.readFileSync( file, "utf8" );
+        const package_json = JSON.parse( data );
 
         if ( !package_json.main || package_json.main === "" ) {
           throw new Error( "Field main is missing or empty in package.json" );
@@ -136,7 +136,7 @@ function run( cmd: CommandOptions ): void {
   // Only one of the following should run.
   if ( cmd.run ) {
     // Run User supplied command.
-    console.log( chalk.blue( `=> Running: ${ cmd.run }, watching ${ cmd.args }` ) );
+    console.log( chalk.blue( `=> Executing: ${ cmd.run }, watching ${ cmd.args }` ) );
     runCommand( cmd.run, cmd.haltOnError );
   } else if ( cmd.runpNpm ) {
     // Run NPM scripts in parallel.
@@ -152,7 +152,7 @@ function run( cmd: CommandOptions ): void {
     } );
   } else {
     // Should never get here.
-    console.log( chalk.red( "Something went wrong, exiting!" ) );
+    console.log( chalk.red( "=> Error: Something went wrong, exiting!" ) );
     process.exit( 1 );
   }
 
@@ -180,15 +180,15 @@ function runCommand( command: string, err_halt: boolean ): void {
     displayErrorMessage( data.toString() );
     if ( err_halt ) {
       stopRunningProcess( child_procs );
-      process.stderr.write( chalk.red( "Error! Forked Child process terminating.\n" ) );
+      process.stderr.write( chalk.red( "=> Error: Execution terminating.\n" ) );
       process.exit( 1 );
     }
   } );
 
   // Uncomment to debug process termination.
-  // child_procs.on( "close", code => {
-  //   console.log( chalk.red( "TERMINATED: Child process." ) );
-  // } );
+  proc.on( "close", code => {
+    console.log( chalk.grey( "=> Execution completed." ) );
+  } );
 }
 
 /**
