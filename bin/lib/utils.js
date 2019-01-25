@@ -8,10 +8,14 @@ var chalk_1 = require("chalk");
 var child_procs = [];
 function watchAndRun(cmd) {
     try {
-        if (!cmd.args || cmd.args.length === 0) {
+        if (cmd.run && (!cmd.args || cmd.args.length === 0)) {
             cmd.args = "**/*.js";
         }
-        if (!cmd.run) {
+        else if (!cmd.run && cmd.args && cmd.args.length > 0) {
+            cmd.run = "node " + cmd.args;
+            cmd.args = "**/*.js";
+        }
+        else if (!cmd.run && (!cmd.args || cmd.args.length === 0)) {
             var file = path.join(process.cwd(), "package.json");
             var stats = fs.statSync(file);
             if (stats.isFile()) {
@@ -22,9 +26,12 @@ function watchAndRun(cmd) {
                 }
                 stats = fs.statSync(package_json.main);
                 if (!stats.isFile()) {
-                    throw new Error("File " + package_json.main + " not found.");
+                    throw new Error("File " + package_json.main + " declared in package.json not found.");
                 }
                 cmd.run = "node " + package_json.main;
+            }
+            else {
+                throw new Error("Missing package.json file, unable to read program name to run using Node.js.");
             }
         }
     }

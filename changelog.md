@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.6.2 (2019-01-24)
+
+- Bug fix, command and watchfile determination for Node.js shortform execution.
+
 ## 0.6.0 (2019-01-24)
 
 - Now when no filename is provided, package.json is used to determine the program to run using Node.js.

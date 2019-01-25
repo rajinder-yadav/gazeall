@@ -34,18 +34,23 @@ let child_procs: ChildProcess[] = [];
 export function watchAndRun( cmd: any ): void {
 
   try {
-    /**
-     * If no watch file(s) provided, watch all *.js files in the
-     * current folder and all sub-folders.
-     */
-    if ( !cmd.args || cmd.args.length === 0 ) {
+    if ( cmd.run && ( !cmd.args || cmd.args.length === 0 ) ) {
+      // console.log( "Check 1" );
+      // Called with command and no watch files.
+      // Default to watch all *.js file in current and all sub-folders.
       cmd.args = "**/*.js";
-    }
-    /**
-     * If no filename provided, try to read filename from package.json
-     * The field "main" will be used as the file to execute using Node.js.
-     */
-    if ( !cmd.run ) {
+    } else if ( !cmd.run && cmd.args && cmd.args.length > 0 ) {
+      // console.log( "Check 2" );
+      // Called with no command, only a watch file.
+      // This is the shorthand to run the watch file using Node.js.
+      // Default to watch all *.js file in current and all sub-folders.
+      cmd.run = `node ${ cmd.args }`;
+      cmd.args = "**/*.js";
+    } else if ( !cmd.run && ( !cmd.args || cmd.args.length === 0 ) ) {
+      // console.log( "Check 3" );
+      // Called with no command and no watch files.
+      // Try to read filename from package.json
+      // The field "main" will be used as the file to execute using Node.js.
       const file = path.join( process.cwd(), "package.json" );
       let stats = fs.statSync( file );
 
@@ -60,9 +65,11 @@ export function watchAndRun( cmd: any ): void {
         stats = fs.statSync( package_json.main );
 
         if ( !stats.isFile() ) {
-          throw new Error( `File ${ package_json.main } not found.` );
+          throw new Error( `File ${ package_json.main } declared in package.json not found.` );
         }
         cmd.run = `node ${ package_json.main }`;
+      } else {
+        throw new Error( "Missing package.json file, unable to read program name to run using Node.js." );
       }
     }
   } catch ( err ) {
