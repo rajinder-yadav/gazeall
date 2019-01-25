@@ -9,6 +9,7 @@ typings/
 
 *.bak
 *.log
+*.tgz
 npm-debug.log*
 yarn-error.log*
 
