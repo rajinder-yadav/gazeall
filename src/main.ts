@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+"use strict";
 
 import * as cmd from "commander";
 import { watchAndRun } from "./lib/utils";
