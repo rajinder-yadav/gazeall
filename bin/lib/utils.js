@@ -102,7 +102,7 @@ function runCommand(command, err_halt) {
         displayErrorMessage(data.toString());
         if (err_halt) {
             stopRunningProcess(child_procs);
-            process.stderr.write(chalk_1.default.red("=> Error: Process terminating.\n"));
+            process.stderr.write(chalk_1.default.red("=> Error: Execution terminating.\n"));
             process.exit(1);
         }
     });
