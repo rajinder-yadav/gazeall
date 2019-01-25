@@ -51,6 +51,7 @@ export function watchAndRun( cmd: any ): void {
       // Called with no command and no watch files.
       // Try to read filename from package.json
       // The field "main" will be used as the file to execute using Node.js.
+      cmd.args = "**/*.js";
       const file = path.join( process.cwd(), "package.json" );
       let stats = fs.statSync( file );
 

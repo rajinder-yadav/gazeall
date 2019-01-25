@@ -16,6 +16,7 @@ function watchAndRun(cmd) {
             cmd.args = "**/*.js";
         }
         else if (!cmd.run && (!cmd.args || cmd.args.length === 0)) {
+            cmd.args = "**/*.js";
             var file = path.join(process.cwd(), "package.json");
             var stats = fs.statSync(file);
             if (stats.isFile()) {
