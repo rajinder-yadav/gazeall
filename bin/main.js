@@ -3,8 +3,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var cmd = require("commander");
 var utils_1 = require("./lib/utils");
+process.once("SIGINT", function (code) {
+    utils_1.StopLaunchedProcesses();
+    process.exit(0);
+});
 cmd
-    .version("0.7.1", "-v, --version")
+    .version("0.8.0", "-v, --version")
     .usage("[options] [file,...]")
     .option("--run <commands>", "run commands then wait for changes to re-run.")
     .option("--wait-first", "wait first, commands will run on changes.")

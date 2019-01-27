@@ -2,13 +2,21 @@
 "use strict";
 
 import * as cmd from "commander";
-import { watchAndRun } from "./lib/utils";
+import { watchAndRun, StopLaunchedProcesses } from "./lib/utils";
+
+/**
+ * Handle signal when User pressed CTRL+C to stop gazeall.
+ */
+process.once( "SIGINT", function( code ) {
+  StopLaunchedProcesses();
+  process.exit( 0 );
+} );
 
 /**
  * Command options.
  */
 cmd
-  .version( "0.7.1", "-v, --version" )
+  .version( "0.8.0", "-v, --version" )
   .usage( "[options] [file,...]" )
   .option( "--run <commands>", "run commands then wait for changes to re-run." )
   .option( "--wait-first", "wait first, commands will run on changes." )

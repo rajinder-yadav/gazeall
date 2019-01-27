@@ -68,6 +68,12 @@ function stopRunningProcess(procs) {
         });
     }
 }
+function StopLaunchedProcesses() {
+    console.log(chalk_1.default.red("\nStopping all launched processes."));
+    stopRunningProcess(child_procs);
+    child_procs = [];
+}
+exports.StopLaunchedProcesses = StopLaunchedProcesses;
 function run(cmd) {
     if (cmd.run) {
         console.log(chalk_1.default.blue("=> Executing: " + cmd.run + ", watching " + cmd.args));

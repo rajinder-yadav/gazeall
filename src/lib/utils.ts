@@ -128,6 +128,15 @@ function stopRunningProcess( procs: ChildProcess[] ) {
 }
 
 /**
+ * Stop all running launched processes.
+ */
+export function StopLaunchedProcesses() {
+  console.log( chalk.red( "\nStopping all launched processes." ) );
+  stopRunningProcess( child_procs );
+  child_procs = [];
+}
+
+/**
  * Execute Child process based on switch used.
  * @param {CommandOptions} cmd - Commander program arguments.
  * @return {void}

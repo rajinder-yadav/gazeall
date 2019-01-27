@@ -2,7 +2,11 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.7.1 (2019-01-24)
+## 0.8.0 (2019-01-24)
+
+- Added support to stop all launched running process when CTRL+C is pressed.
+
+## 0.7.1 (2019-01-27)
 
 - Fix, when no watch files are passed, but the --run switch is use. Gazeall will default to monitoring all files is all sub-folders. This is a change from monitoring only "*.js" files.
 
