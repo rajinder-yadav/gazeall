@@ -92,7 +92,7 @@ Where "${main}" is the value of the field main ("server.js" in this example).
 
 ### Watch all files and sub-folders
 
-This will run the command and then start to watch file for changes to re-run command.
+This will run the command and then start to watch files under the "src" sub-folder for changes to re-run command.
 
 ```sh
 npx gazeall --run "node src/main.js" "src/**/*"
@@ -100,13 +100,15 @@ npx gazeall --run "node src/main.js" "src/**/*"
 
 ### Watch all files under multiple sub-folders
 
-This will run the command and then start to watch file for changes to re-run command.
+This will run the command and then start to watch files for changes under sub-folder "src" and "libs" to re-run command.
 
 ```sh
 npx gazeall --run "node src/main.js" "src/**/*" "libs/**/*"
 ```
 
 ### Wait first and run command on change
+
+This command is only be execute after changes are detected.
 
 ```sh
 npx gazeall --wait-first --run "node src/main.js" "src/**/*"
@@ -122,8 +124,10 @@ npx gazeall --run "node src/main.js" index.html src/main.js
 
 ### Target all JavaScript files under a folder
 
+Always make sure to put globs inside quotes.
+
 ```sh
-npx gazeall --run "node src/main.js" index.html src/*.js
+npx gazeall --run "node src/main.js" index.html "src/*.js"
 ```
 
 ### Running multiple commands
@@ -131,12 +135,12 @@ npx gazeall --run "node src/main.js" index.html src/*.js
 Multiple commands are chained using "&&" and surrounded with quotes.
 
 ```sh
-npx gazeall --run "tsc src/*.ts && node build/main.js" src/*
+npx gazeall --run "tsc src/*.ts && node build/main.js" "src/*"
 ```
 
 ## NPM script examples
 
-For running NPM scripts, _gazeall_ can run scripts either in _parallel_ or _synchronous_.
+For running NPM scripts inside package.json, _gazeall_ can run scripts either in _parallel_ or _synchronous_.
 
 * To run in parallel mode, use: `--runp-npm`.
 * To run in synchronous mode, use: `--runs-npm`.
