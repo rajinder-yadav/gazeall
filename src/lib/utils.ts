@@ -37,8 +37,8 @@ export function watchAndRun( cmd: any ): void {
     if ( cmd.run && ( !cmd.args || cmd.args.length === 0 ) ) {
       // console.log( "Check 1" );
       // Called with command and no watch files.
-      // Default to watch all *.js file in current and all sub-folders.
-      cmd.args = "**/*.js";
+      // Default to watch all file in current and all sub-folders.
+      cmd.args = "**/*";
     } else if ( !cmd.run && cmd.args && cmd.args.length > 0 ) {
       // console.log( "Check 2" );
       // Called with no command, only a watch file.

@@ -9,7 +9,7 @@ var child_procs = [];
 function watchAndRun(cmd) {
     try {
         if (cmd.run && (!cmd.args || cmd.args.length === 0)) {
-            cmd.args = "**/*.js";
+            cmd.args = "**/*";
         }
         else if (!cmd.run && cmd.args && cmd.args.length > 0) {
             cmd.run = "node " + cmd.args;
