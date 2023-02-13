@@ -39,24 +39,7 @@
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
-    "@types/node": "^18.13.0",
-    "@types/tape": "^4.13.2",
-    "@typescript-eslint/eslint-plugin": "^5.51.0",
-    "cross-env": "^7.0.3",
-    "cross-var": "^1.1.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.4",
-    "shx": "^0.3.4",
-    "tap-summary": "^4.0.0",
-    "tape": "^5.6.3",
-    "tape-run": "^10.0.0",
-    "typedoc": "^0.23.25",
-    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "colors": "^1.4.0",
-    "commander": "^10.0.0",
-    "gaze": "^1.1.3"
   }
 }
