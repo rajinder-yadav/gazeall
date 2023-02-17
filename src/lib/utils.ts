@@ -166,12 +166,12 @@ function stopRunningProcess(
 ) {
   if (procs && procs.length > 0) {
     procs.forEach((proc: ChildProcess) => {
-      const err = proc.kill('SIGINT');
+      proc.kill('SIGINT');
       if (show_message) {
         console.log(
           colors.red(
             `Stopping process with pid[${proc.pid}], exit[${proc.exitCode}] - ${
-              proc.exitCode ? 'failed' : 'success'
+              proc.exitCode === 0 ? 'success' : 'failed'
             }`
           )
         );
@@ -296,7 +296,7 @@ function runCommand(command: string, err_halt: boolean): void {
  * @return {void}
  */
 // function runNPMCommand(command: string, err_halt: boolean): void {
-////    console.log( "debug [runNPMCommand] > ", command );  // !debug
+//    console.log( "debug [runNPMCommand] > ", command );  // !debug
 //   const proc: ChildProcess = exec(
 //     `npm run ${command}`,
 //     (err, stdout, stderr) => {
