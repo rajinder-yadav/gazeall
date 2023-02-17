@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": [                                  /* Specify library files to be included in the compilation. */
+    "lib": [ /* Specify library files to be included in the compilation. */
       "es2018",
       "es2017",
       "dom",
@@ -23,7 +23,8 @@
     "noImplicitAny": false,
     "sourceMap": false,
     "removeComments": true,
-    "outDir": "./bin"
+    "outDir": "./bin",
+    "strict": true
   },
   "include": [
     "src/**/*"
