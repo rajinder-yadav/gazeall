@@ -109,13 +109,11 @@ export function watchAndRun(cmd: any): void {
       console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
 
       // Called as: gazeall
-      //        or: gazeall --npms "start"
-      //        or: gazeall --npmp "start"
       // Called with no run and watch files.
       // Try to read run filename from package.json
       // The field "main" will be used as the file to execute using Node.js.
       cmd.run = [`node ${PACKAGE_JSON['main']}`];
-      cmd.watch = ['**/*'];
+      cmd.watch = ['**/*.js'];
       console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
       console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
     } else {
