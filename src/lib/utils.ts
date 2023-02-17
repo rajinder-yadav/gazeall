@@ -60,15 +60,15 @@ function getWatchList(cmd: any): string[] {
  * @return {void}
  */
 export function watchAndRun(cmd: any): void {
-  // console.log('debug [watchAndRun]> ', cmd);
+  // console.log('debug [watchAndRun]> ', cmd); // !debug
 
   try {
     if (cmd.npmp || cmd.npms) {
       const watch_list = cmd.files.splice(2);
       cmd.watch = watch_list.length > 0 ? watch_list : '**/*';
-      console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp);
-      console.log('debug [watchAndRun:npms] 0> ', cmd.npms);
-      console.log('debug [watchAndRun:watch] 0> ', cmd.watch);
+      // console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp);   // !debug
+      // console.log('debug [watchAndRun:npms] 0> ', cmd.npms);   // !debug
+      // console.log('debug [watchAndRun:watch] 0> ', cmd.watch); // !debug
     } else if (cmd.run) {
       // Called as: gazeall --run "node main.js" OR
       // Called as: gazeall --run "node main.js --watch <watch...>"
@@ -78,15 +78,15 @@ export function watchAndRun(cmd: any): void {
       } else {
         cmd.watch = getWatchList(cmd);
       }
-      console.log('debug [watchAndRun:run] 1> ', cmd.run); // !debug
-      console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
-      console.log('debug [watchAndRun:cmd] 1> ', cmd); // !debug
+      // console.log('debug [watchAndRun:run] 1> ', cmd.run);     // !debug
+      // console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
+      // console.log('debug [watchAndRun:cmd] 1> ', cmd);         // !debug
       // Called with command and no watch files.
     } else if (!cmd.run && (cmd.watch || (cmd.files && cmd.files.length > 0))) {
       // Called as: gazeall main.js
       //        or: gazeall main.js <watch...> OR
-      console.log('debug [watchAndRun:cmd] 2> ', cmd); // !debug
-      console.log('debug [watchAndRun:files] 2> ', cmd.files); // !debug
+      // console.log('debug [watchAndRun:cmd] 2> ', cmd);         // !debug
+      // console.log('debug [watchAndRun:files] 2> ', cmd.files); // !debug
       // Called with no run command, only a node.js run file.
       // This is the shorthand to run the watch file using Node.js.
       // Default to watch all files in current and all sub-folders.
@@ -99,14 +99,14 @@ export function watchAndRun(cmd: any): void {
       } else {
         cmd.watch = getWatchList(cmd);
       }
-      console.log('debug [watchAndRun:run] 2> ', cmd.run); // !debug
-      console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
+      // console.log('debug [watchAndRun:run] 2> ', cmd.run);     // !debug
+      // console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
     } else if (
       !cmd.run &&
       !cmd.watch &&
       (!cmd.files || cmd.files.length === 0)
     ) {
-      console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
+      // console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
 
       // Called as: gazeall
       // Called with no run and watch files.
@@ -114,8 +114,8 @@ export function watchAndRun(cmd: any): void {
       // The field "main" will be used as the file to execute using Node.js.
       cmd.run = [`node ${PACKAGE_JSON['main']}`];
       cmd.watch = ['**/*.js'];
-      console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
-      console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
+      // console.log('debug [watchAndRun:run] 3> ', cmd.run);     // !debug
+      // console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
     } else {
       throw new Error(
         'Missing package.json file, unable to read program name to run using Node.js.'
@@ -205,7 +205,7 @@ function run(cmd: GazeallOptions): void {
   if (cmd.npmp) {
     // Run NPM scripts in parallel.
     const run_list: string[] = cmd.npmp.split(/\s+/);
-    console.log('debug [npmp]>', run_list); // !debug
+    // console.log('debug [npmp]>', run_list); // !debug
     run_list.forEach((script: string) => {
       const command = PACKAGE_JSON['scripts'][script];
       console.log(
@@ -218,7 +218,7 @@ function run(cmd: GazeallOptions): void {
   } else if (cmd.npms) {
     // Run NPM scripts in sequence.
     const run_list: string[] = cmd.npms.split(/\s+/);
-    console.log('debug [npms]>', run_list); // !debug
+    // console.log('debug [npms]>', run_list); // !debug
     run_list.forEach((script: string) => {
       const command = PACKAGE_JSON['scripts'][script];
       console.log(
