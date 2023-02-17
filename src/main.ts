@@ -32,7 +32,7 @@ cmd
 
 const options = cmd.opts();
 options.files = process.argv.slice(2);
-// console.log('debug [options]> ', options); // !debug
+//console.log('debug [options]> ', options); // !debug
 
 /** Start watching after delay interval or next event loop if value not provided. */
 setTimeout(() => {

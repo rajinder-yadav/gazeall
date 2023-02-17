@@ -42,7 +42,7 @@ function getWatchList(cmd: any): string[] {
   //       or: ["file1 file2 ...", "file3"]
   //       or: ["file1", "file2", ...]
 
-  let watch_list = [];
+  let watch_list: string[] = [];
   if (typeof cmd.watch === 'string') {
     watch_list = cmd.watch.split(/\s+/);
   } else {
@@ -60,70 +60,64 @@ function getWatchList(cmd: any): string[] {
  * @return {void}
  */
 export function watchAndRun(cmd: any): void {
-  // console.log('debug [watchAndRun]> ', cmd); // !debug
+  //  console.log('debug [watchAndRun]> ', cmd); // !debug
 
-  try {
-    if (cmd.npmp || cmd.npms) {
-      const watch_list = cmd.files.splice(2);
-      cmd.watch = watch_list.length > 0 ? watch_list : '**/*';
-      // console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp);   // !debug
-      // console.log('debug [watchAndRun:npms] 0> ', cmd.npms);   // !debug
-      // console.log('debug [watchAndRun:watch] 0> ', cmd.watch); // !debug
-    } else if (cmd.run) {
-      // Called as: gazeall --run "node main.js" OR
-      // Called as: gazeall --run "node main.js --watch <watch...>"
-      if (!cmd.watch) {
-        // Default to watch all file in current and all sub-folders.
-        cmd.watch = ['**/*'];
-      } else {
-        cmd.watch = getWatchList(cmd);
-      }
-      // console.log('debug [watchAndRun:run] 1> ', cmd.run);     // !debug
-      // console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
-      // console.log('debug [watchAndRun:cmd] 1> ', cmd);         // !debug
-      // Called with command and no watch files.
-    } else if (!cmd.run && (cmd.watch || (cmd.files && cmd.files.length > 0))) {
-      // Called as: gazeall main.js
-      //        or: gazeall main.js <watch...> OR
-      // console.log('debug [watchAndRun:cmd] 2> ', cmd);         // !debug
-      // console.log('debug [watchAndRun:files] 2> ', cmd.files); // !debug
-      // Called with no run command, only a node.js run file.
-      // This is the shorthand to run the watch file using Node.js.
-      // Default to watch all files in current and all sub-folders.
-      cmd.run = [`node ${cmd.files[0]}`];
-
-      if (!cmd.watch) {
-        // Default to watch all file in current and all sub-folders.
-        let watch = cmd.files.splice(1);
-        cmd.watch = watch.length > 0 ? watch : ['**/*.js'];
-      } else {
-        cmd.watch = getWatchList(cmd);
-      }
-      // console.log('debug [watchAndRun:run] 2> ', cmd.run);     // !debug
-      // console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
-    } else if (
-      !cmd.run &&
-      !cmd.watch &&
-      (!cmd.files || cmd.files.length === 0)
-    ) {
-      // console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
-
-      // Called as: gazeall
-      // Called with no run and watch files.
-      // Try to read run filename from package.json
-      // The field "main" will be used as the file to execute using Node.js.
-      cmd.run = [`node ${PACKAGE_JSON['main']}`];
-      cmd.watch = ['**/*.js'];
-      // console.log('debug [watchAndRun:run] 3> ', cmd.run);     // !debug
-      // console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
+  if (cmd.npmp || cmd.npms) {
+    const watch_list = cmd.files.splice(2);
+    cmd.watch = watch_list.length > 0 ? watch_list : '**/*';
+    //    console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp); // !debug
+    //    console.log('debug [watchAndRun:npms] 0> ', cmd.npms); // !debug
+    //    console.log('debug [watchAndRun:watch] 0> ', cmd.watch); // !debug
+  } else if (cmd.run) {
+    // Called as: gazeall --run "node main.js" OR
+    // Called as: gazeall --run "node main.js --watch <watch...>"
+    if (!cmd.watch) {
+      // Default to watch all file in current and all sub-folders.
+      cmd.watch = ['**/*'];
     } else {
-      throw new Error(
-        'Missing package.json file, unable to read program name to run using Node.js.'
-      );
+      cmd.watch = getWatchList(cmd);
     }
-  } catch (err) {
+    //    console.log('debug [watchAndRun:run] 1> ', cmd.run); // !debug
+    //    console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
+    //    console.log('debug [watchAndRun:cmd] 1> ', cmd); // !debug
+    // Called with command and no watch files.
+  } else if (!cmd.run && (cmd.watch || (cmd.files && cmd.files.length > 0))) {
+    // Called as: gazeall main.js
+    //        or: gazeall main.js <watch...> OR
+    //    console.log('debug [watchAndRun:cmd] 2> ', cmd); // !debug
+    //    console.log('debug [watchAndRun:files] 2> ', cmd.files); // !debug
+    // Called with no run command, only a node.js run file.
+    // This is the shorthand to run the watch file using Node.js.
+    // Default to watch all files in current and all sub-folders.
+    cmd.run = [`node ${cmd.files[0]}`];
+
+    if (!cmd.watch) {
+      // Default to watch all file in current and all sub-folders.
+      let watch = cmd.files.splice(1);
+      cmd.watch = watch.length > 0 ? watch : ['**/*.js'];
+    } else {
+      cmd.watch = getWatchList(cmd);
+    }
+    //    console.log('debug [watchAndRun:run] 2> ', cmd.run); // !debug
+    //    console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
+  } else if (!cmd.run && !cmd.watch && (!cmd.files || cmd.files.length === 0)) {
+    //    console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
+
+    // Called as: gazeall
+    // Called with no run and watch files.
+    // Try to read run filename from package.json
+    // The field "main" will be used as the file to execute using Node.js.
+    cmd.run = [`node ${PACKAGE_JSON['main']}`];
+    cmd.watch = ['**/*.js'];
+    //    console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
+    //    console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
+  } else {
+    console.log(
+      colors.red(
+        'Missing package.json file, unable to read program name to run using Node.js.'
+      )
+    );
     console.log(colors.red('Failed to provide a command to execute.'));
-    console.log(colors.red(err.message));
     process.exit(1);
   }
 
@@ -205,7 +199,7 @@ function run(cmd: GazeallOptions): void {
   if (cmd.npmp) {
     // Run NPM scripts in parallel.
     const run_list: string[] = cmd.npmp.split(/\s+/);
-    // console.log('debug [npmp]>', run_list); // !debug
+    //    console.log('debug [npmp]>', run_list); // !debug
     run_list.forEach((script: string) => {
       const command = PACKAGE_JSON['scripts'][script];
       console.log(
@@ -213,12 +207,12 @@ function run(cmd: GazeallOptions): void {
           `=> Executing script: [${command}] => watching '${cmd.watch}'`
         )
       );
-      runCommand(command, cmd.halt);
+      runCommand(command, cmd?.halt || false);
     });
   } else if (cmd.npms) {
     // Run NPM scripts in sequence.
     const run_list: string[] = cmd.npms.split(/\s+/);
-    // console.log('debug [npms]>', run_list); // !debug
+    //    console.log('debug [npms]>', run_list); // !debug
     run_list.forEach((script: string) => {
       const command = PACKAGE_JSON['scripts'][script];
       console.log(
@@ -226,7 +220,7 @@ function run(cmd: GazeallOptions): void {
           `=> Executing script: [${command}] => watching '${cmd.watch}'`
         )
       );
-      const t_execution = runCommandSync(command, cmd.halt);
+      const t_execution = runCommandSync(command, cmd?.halt || false);
       console.log(
         colors.grey(`[${command}] => Execution completed (${t_execution} ms).`)
       );
@@ -237,7 +231,7 @@ function run(cmd: GazeallOptions): void {
       colors.blue(`=> Executing: [${cmd.run}] => watching '${cmd.watch}'`)
     );
     cmd.run.forEach((command) => {
-      runCommand(command, cmd.halt);
+      runCommand(command, cmd?.halt || false);
     });
   } else {
     // Should never get here.
@@ -256,31 +250,35 @@ function run(cmd: GazeallOptions): void {
  */
 function runCommand(command: string, err_halt: boolean): void {
   const args: string[] = command.split(/\s+/);
-  const cmd: string = args.shift();
+  const cmd: string = args.shift() || '';
   const proc: ChildProcess = spawn(cmd, args, {detached: true});
   child_procs.push(proc);
 
   const t_start = performance.now();
-  // console.log('debug t0=', t_start); // !debug
+  //  console.log('debug t0=', t_start); // !debug
 
-  proc.stdout.on('data', (data: Buffer) => {
-    process.stdout.write(`[${command}] => ${data.toString()}`);
-  });
+  if (proc.stdout) {
+    proc.stdout.on('data', (data: Buffer) => {
+      process.stdout.write(`[${command}] => ${data.toString()}`);
+    });
+  }
 
-  proc.stderr.on('data', (data: Buffer) => {
-    displayErrorMessage(data.toString());
-    if (err_halt) {
-      stopRunningProcess(child_procs);
-      process.stderr.write(
-        colors.red(`[${command}] => Error: Execution terminating.\n`)
-      );
-      process.exit(1);
-    }
-  });
+  if (proc.stderr) {
+    proc.stderr.on('data', (data: Buffer) => {
+      displayErrorMessage(data.toString());
+      if (err_halt) {
+        stopRunningProcess(child_procs);
+        process.stderr.write(
+          colors.red(`[${command}] => Error: Execution terminating.\n`)
+        );
+        process.exit(1);
+      }
+    });
+  }
 
   proc.on('close', (code) => {
     const t_end = performance.now();
-    // console.log('debug t0==', t_start); // !debug
+    //    console.log('debug t0==', t_start); // !debug
     console.log(
       colors.grey(
         `[${command}] => Execution completed (${t_end - t_start} ms).`
@@ -298,7 +296,7 @@ function runCommand(command: string, err_halt: boolean): void {
  * @return {void}
  */
 // function runNPMCommand(command: string, err_halt: boolean): void {
-//   // console.log( "debug [runNPMCommand] > ", command );  // !debug
+////    console.log( "debug [runNPMCommand] > ", command );  // !debug
 //   const proc: ChildProcess = exec(
 //     `npm run ${command}`,
 //     (err, stdout, stderr) => {
@@ -340,7 +338,7 @@ function runCommandSync(command: string, err_halt: boolean): number {
     if (out) {
       process.stdout.write(`[${command}] => ${out.toString()}`);
     }
-  } catch (err) {
+  } catch (err: any) {
     displayErrorMessage(err);
     if (err_halt) {
       stopRunningProcess(child_procs);
