@@ -1,22 +1,30 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var cmd = require("commander");
+var node_process_1 = __importDefault(require("node:process"));
+var commander_1 = require("commander");
 var utils_1 = require("./lib/utils");
-process.once("SIGINT", function (code) {
-    utils_1.StopLaunchedProcesses();
-    process.exit(0);
+node_process_1.default.on('SIGINT', function (code) {
+    (0, utils_1.StopLaunchedProcesses)();
+    node_process_1.default.exit(0);
 });
+var cmd = new commander_1.Command();
 cmd
-    .version("0.8.0", "-v, --version")
-    .usage("[options] [file,...]")
-    .option("--run <commands>", "run commands then wait for changes to re-run.")
-    .option("--wait-first", "wait first, commands will run on changes.")
-    .option("--runp-npm <scripts>", "NPM scripts to run parallel.")
-    .option("--runs-npm <scripts>", "NPM scripts to run synchronous.")
-    .option("--delay <ms>", "start delay value in milliseconds.")
-    .option("--halt-on-error", "halt on error.")
-    .parse(process.argv);
+    .version('0.9.0', '-v, --version')
+    .usage('[options] [files...]')
+    .option('-r, --run <command...>', 'run commands then wait for changes to re-run.')
+    .option('-w, --watch <files...>', 'files to watch for change.')
+    .option('-W, --wait', 'enter wait, commands will run on changes.')
+    .option('-p, --npmp <scripts>', 'NPM scripts to run parallel.')
+    .option('-s, --npms <scripts>', 'NPM scripts to run synchronous.')
+    .option('-d, --delay <ms>', 'start delay value in milliseconds.')
+    .option('-H, --halt', 'halt on error.')
+    .parse(node_process_1.default.argv);
+var options = cmd.opts();
+options.files = node_process_1.default.argv.slice(2);
 setTimeout(function () {
-    utils_1.watchAndRun(cmd);
-}, parseInt(cmd.delay) || 0);
+    (0, utils_1.watchAndRun)(options);
+}, parseInt(options['delay']) || 0);

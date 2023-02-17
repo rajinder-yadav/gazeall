@@ -2,6 +2,31 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.9.0 (2023-02-13)
+
+- Improved npm synchronous script execution.
+- Improved npm synchronous parallel execution.
+- Now showing execution tim on exit.
+- Chalk replaced with colour, was giving runtime error.
+- "run" now takes multiple commands.
+- "runp-npn" changed to "npmp".
+- "runsp-npn" changed to "npms".
+- "wait-first" changed to "wait".
+- "halt-on-error" changed to "halt".
+- Fixed multiple errors caused up commander update.
+- "watch" accept a list of files or multiple quoted files.
+- Wait now accept an integer value.
+- Improved "watchAndRun" function.
+- Removed eslint for typescript, too many annoying errors.
+- Added prettier for code formatting.
+- Process name added to output.
+- Fixed Linux signal handling for CTRL+C.
+- Added terminating process pid, exit code and success, failed console message.
+
+## 0.8.1 (2019-07-03)
+
+- Bug fix, Stack overflow error, and executing the incorrect path. NPM Script not execute correctly also.
+
 ## 0.8.0 (2019-01-24)
 
 - Added support to stop all launched running process when CTRL+C is pressed.
