@@ -13,7 +13,7 @@ node_process_1.default.on('SIGINT', function (code) {
 });
 var cmd = new commander_1.Command();
 cmd
-    .version('0.9.0', '-v, --version')
+    .version('0.10.0', '-v, --version')
     .usage('[options] [files...]')
     .option('-r, --run <command...>', 'run commands then wait for changes to re-run.')
     .option('-w, --watch <files...>', 'files to watch for change.')
@@ -24,7 +24,9 @@ cmd
     .option('-H, --halt', 'halt on error.')
     .parse(node_process_1.default.argv);
 var options = cmd.opts();
-options.files = node_process_1.default.argv.slice(2);
+options.args = cmd.args;
+console.log('debug [options]> ', options);
+console.log('debug [cmd.args]> ', cmd.args);
 setTimeout(function () {
     (0, utils_1.watchAndRun)(options);
 }, parseInt(options['delay']) || 0);
