@@ -16,7 +16,7 @@ const cmd = new Command();
 
 /** Command options. */
 cmd
-  .version('0.9.0', '-v, --version')
+  .version('0.10.0', '-v, --version')
   .usage('[options] [files...]')
   .option(
     '-r, --run <command...>',
@@ -31,8 +31,9 @@ cmd
   .parse(process.argv);
 
 const options = cmd.opts();
-options.files = process.argv.slice(2);
-//console.log('debug [options]> ', options); // !debug
+options.args = cmd.args;
+console.log('debug [options]> ', options); // !debug
+console.log('debug [cmd.args]> ', cmd.args); // !debug
 
 /** Start watching after delay interval or next event loop if value not provided. */
 setTimeout(() => {

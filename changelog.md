@@ -2,6 +2,15 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.10.0 (2023-02-17)
+
+- When stopping running process, not show how many to stop.
+- Code refactor for strict typechecking using loggical and, or in place of if statement.
+- Add option for npm script run (npmp, npms) to provide a watch file list.
+- Corrected Commander args not getting passed along with its options.
+- Added missing run file checks with error message and clean exit.
+- Tidy Error messages.
+
 ## 0.9.0 (2023-02-13)
 
 - Improved npm synchronous script execution.
