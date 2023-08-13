@@ -20,7 +20,7 @@ cmd
   .usage('[options] [files...]')
   .option(
     '-r, --run <command...>',
-    'run commands then wait for changes to re-run.'
+    'run commands then wait for changes to re-run.',
   )
   .option('-w, --watch <files...>', 'files to watch for change.')
   .option('-W, --wait', 'enter wait, commands will run on changes.')
@@ -36,6 +36,9 @@ console.log('debug [options]> ', options); // !debug
 console.log('debug [cmd.args]> ', cmd.args); // !debug
 
 /** Start watching after delay interval or next event loop if value not provided. */
-setTimeout(() => {
-  watchAndRun(options);
-}, parseInt(options['delay']) || 0);
+setTimeout(
+  () => {
+    watchAndRun(options);
+  },
+  parseInt(options['delay']) || 0,
+);

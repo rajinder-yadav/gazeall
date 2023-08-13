@@ -113,8 +113,8 @@ export function watchAndRun(cmd: any): void {
     if (!package_json_main) {
       console.log(
         colors.red(
-          '=> Error: No run file passed and field "main" is missing in package.json, please correct one.'
-        )
+          '=> Error: No run file passed and field "main" is missing in package.json, please correct one.',
+        ),
       );
       process.exit(1);
     }
@@ -129,19 +129,19 @@ export function watchAndRun(cmd: any): void {
     } catch (ex: any) {
       console.log(
         colors.red(
-          `=> Error: File ${package_json_main} declared in package.json not found.`
-        )
+          `=> Error: File ${package_json_main} declared in package.json not found.`,
+        ),
       );
       process.exit(8);
     }
   } else {
     console.log(
       colors.red(
-        '=> Error: Missing package.json file, unable to read program name to run using Node.js.'
-      )
+        '=> Error: Missing package.json file, unable to read program name to run using Node.js.',
+      ),
     );
     console.log(
-      colors.red('=> Error: Failed to provide a command to execute.')
+      colors.red('=> Error: Failed to provide a command to execute.'),
     );
     process.exit(2);
   }
@@ -187,7 +187,7 @@ function displayErrorMessage(err: Error | string) {
  */
 function stopRunningProcess(
   procs: ChildProcess[],
-  show_message: boolean = false
+  show_message: boolean = false,
 ) {
   if (procs && procs.length > 0) {
     procs.forEach((proc: ChildProcess) => {
@@ -197,8 +197,8 @@ function stopRunningProcess(
           colors.red(
             `=> Stopping process with pid[${proc.pid}], exit[${
               proc.exitCode
-            }] - ${proc.exitCode === 0 ? 'success' : 'failed'}`
-          )
+            }] - ${proc.exitCode === 0 ? 'success' : 'failed'}`,
+          ),
         );
       }
     });
@@ -210,7 +210,7 @@ function stopRunningProcess(
  */
 export function StopLaunchedProcesses() {
   console.log(
-    colors.red(`\n=> Stopping ${child_procs.length} launched processes.`)
+    colors.red(`\n=> Stopping ${child_procs.length} launched processes.`),
   );
   stopRunningProcess(child_procs, true);
   child_procs = [];
@@ -232,8 +232,8 @@ function run(cmd: GazeallOptions): void {
       const pid = runCommand(command, cmd?.halt || false);
       console.log(
         colors.blue(
-          `=> Running script [${pid}:${command}] + Watching '${cmd.watch}'`
-        )
+          `=> Running script [${pid}:${command}] + Watching '${cmd.watch}'`,
+        ),
       );
     });
   } else if (cmd.npms) {
@@ -243,11 +243,11 @@ function run(cmd: GazeallOptions): void {
     run_list.forEach((script: string) => {
       const command = PACKAGE_JSON['scripts'][script];
       console.log(
-        colors.blue(`=> Running script [${command}] + Watching '${cmd.watch}'`)
+        colors.blue(`=> Running script [${command}] + Watching '${cmd.watch}'`),
       );
       const t_execution = runCommandSync(command, cmd?.halt || false);
       console.log(
-        colors.grey(`=> Process [${command}] completed (${t_execution} ms).`)
+        colors.grey(`=> Process [${command}] completed (${t_execution} ms).`),
       );
     });
   } else if (cmd.run) {
@@ -255,7 +255,7 @@ function run(cmd: GazeallOptions): void {
     cmd.run.forEach((command) => {
       const pid = runCommand(command, cmd?.halt || false);
       console.log(
-        colors.blue(`=> Running [${pid}:${command}] + Watching '${cmd.watch}'`)
+        colors.blue(`=> Running [${pid}:${command}] + Watching '${cmd.watch}'`),
       );
     });
   } else {
@@ -290,7 +290,7 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
         .split('\n')
         .filter((v) => v !== '')
         .map((v) =>
-          process.stdout.write(`[${proc?.pid}:${command}] => ${v}\n`)
+          process.stdout.write(`[${proc?.pid}:${command}] => ${v}\n`),
         );
       // process.stdout.write(`[${proc?.pid}:${command}] => ${data.toString()}`);
     });
@@ -303,8 +303,8 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
         stopRunningProcess(child_procs);
         process.stderr.write(
           colors.red(
-            `=> Error! Process [${proc?.pid}:${command}] terminating.\n`
-          )
+            `=> Error! Process [${proc?.pid}:${command}] terminating.\n`,
+          ),
         );
         process.exit(4);
       }
@@ -318,8 +318,8 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
       colors.grey(
         `=> Process [${proc?.pid}:${command}] completed (${
           t_end - t_start
-        } ms).`
-      )
+        } ms).`,
+      ),
     );
   });
   return proc?.pid;
@@ -409,8 +409,8 @@ function readPackageJSONProperties(): any {
       if (!package_json['main'] || package_json['main'] === '') {
         console.log(
           colors.red(
-            '=> Warning! Field main is missing or empty in package.json'
-          )
+            '=> Warning! Field main is missing or empty in package.json',
+          ),
         );
       }
 
@@ -419,8 +419,8 @@ function readPackageJSONProperties(): any {
       } catch (ex: any) {
         console.log(
           colors.red(
-            `=> Warning! File ${package_json['main']} declared in package.json not found.`
-          )
+            `=> Warning! File ${package_json['main']} declared in package.json not found.`,
+          ),
         );
       }
       return package_json;
