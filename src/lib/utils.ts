@@ -59,19 +59,19 @@ function getWatchList(cmd: any): string[] {
  * @return {void}
  */
 export function watchAndRun(cmd: any): void {
-  console.log('debug [watchAndRun]> ', cmd); // !debug
+  // console.log('debug [watchAndRun]> ', cmd); // !debug
 
   if (cmd.npmp || cmd.npms) {
-    console.log('debug [watchAndRun:cmd] 0> ', cmd); // !debug
+    // console.log('debug [watchAndRun:cmd] 0> ', cmd); // !debug
     // Fallback to args if no watch files provided.
     if (!cmd.watch) {
       cmd.watch = cmd.args?.length > 0 ? cmd.args : '**/*';
     }
-    console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp); // !debug
-    console.log('debug [watchAndRun:npms] 0> ', cmd.npms); // !debug
-    console.log('debug [watchAndRun:watch] 0> ', cmd.watch); // !debug
+    // console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp); // !debug
+    // console.log('debug [watchAndRun:npms] 0> ', cmd.npms); // !debug
+    // console.log('debug [watchAndRun:watch] 0> ', cmd.watch); // !debug
   } else if (cmd.run) {
-    console.log('debug [watchAndRun:cmd] 1> ', cmd); // !debug
+    // console.log('debug [watchAndRun:cmd] 1> ', cmd); // !debug
     // Called as: gazeall --run "node main.js" OR
     // Called as: gazeall --run "node main.js --watch <watch...>"
     if (!cmd.watch) {
@@ -80,11 +80,11 @@ export function watchAndRun(cmd: any): void {
     } else {
       cmd.watch = getWatchList(cmd);
     }
-    console.log('debug [watchAndRun:run] 1> ', cmd.run); // !debug
-    console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
+    // console.log('debug [watchAndRun:run] 1> ', cmd.run); // !debug
+    // console.log('debug [watchAndRun:watch] 1> ', cmd.watch); // !debug
     // Called with command and no watch files.
   } else if (!cmd.run && (cmd.watch || (cmd.args && cmd.args.length > 0))) {
-    console.log('debug [watchAndRun:cmd] 2> ', cmd); // !debug
+    // console.log('debug [watchAndRun:cmd] 2> ', cmd); // !debug
     // Called as: gazeall main.js
     //        or: gazeall main.js <watch...> OR
     // Called with no run command, only a node.js run file.
@@ -99,11 +99,11 @@ export function watchAndRun(cmd: any): void {
     } else {
       cmd.watch = getWatchList(cmd);
     }
-    console.log('debug [watchAndRun:args] 2> ', cmd.args); // !debug
-    console.log('debug [watchAndRun:run] 2> ', cmd.run); // !debug
-    console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
+    // console.log('debug [watchAndRun:args] 2> ', cmd.args); // !debug
+    // console.log('debug [watchAndRun:run] 2> ', cmd.run); // !debug
+    // console.log('debug [watchAndRun:watch] 2> ', cmd.watch); // !debug
   } else if (!cmd.run && !cmd.watch && (!cmd.args || cmd.args.length === 0)) {
-    console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
+    // console.log('debug [watchAndRun:cmd] 3> ', cmd); // !debug
 
     // Called as: gazeall
     // Called with no run and watch files.
@@ -120,10 +120,10 @@ export function watchAndRun(cmd: any): void {
     }
     cmd.run = [`node ${package_json_main}`];
     cmd.watch = ['**/*.js'];
-    console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
-    console.log('debug [watchAndRun:args] 3> ', cmd.args); // !debug
-    console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
-    console.log('debug [watchAndRun:npm_main] 3> ', PACKAGE_JSON['main']); // !debug
+    // console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
+    // console.log('debug [watchAndRun:args] 3> ', cmd.args); // !debug
+    // console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
+    // console.log('debug [watchAndRun:npm_main] 3> ', PACKAGE_JSON['main']); // !debug
     try {
       fs.statSync(package_json_main);
     } catch (ex: any) {

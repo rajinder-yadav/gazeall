@@ -32,8 +32,8 @@ cmd
 
 const options = cmd.opts();
 options.args = cmd.args;
-console.log('debug [options]> ', options); // !debug
-console.log('debug [cmd.args]> ', cmd.args); // !debug
+// console.log('debug [options]> ', options); // !debug
+// console.log('debug [cmd.args]> ', cmd.args); // !debug
 
 /** Start watching after delay interval or next event loop if value not provided. */
 setTimeout(

@@ -50,29 +50,20 @@ function getWatchList(cmd) {
 }
 function watchAndRun(cmd) {
     var _a;
-    console.log('debug [watchAndRun]> ', cmd);
     if (cmd.npmp || cmd.npms) {
-        console.log('debug [watchAndRun:cmd] 0> ', cmd);
         if (!cmd.watch) {
             cmd.watch = ((_a = cmd.args) === null || _a === void 0 ? void 0 : _a.length) > 0 ? cmd.args : '**/*';
         }
-        console.log('debug [watchAndRun:npmp] 0> ', cmd.npmp);
-        console.log('debug [watchAndRun:npms] 0> ', cmd.npms);
-        console.log('debug [watchAndRun:watch] 0> ', cmd.watch);
     }
     else if (cmd.run) {
-        console.log('debug [watchAndRun:cmd] 1> ', cmd);
         if (!cmd.watch) {
             cmd.watch = ['**/*'];
         }
         else {
             cmd.watch = getWatchList(cmd);
         }
-        console.log('debug [watchAndRun:run] 1> ', cmd.run);
-        console.log('debug [watchAndRun:watch] 1> ', cmd.watch);
     }
     else if (!cmd.run && (cmd.watch || (cmd.args && cmd.args.length > 0))) {
-        console.log('debug [watchAndRun:cmd] 2> ', cmd);
         cmd.run = ["node ".concat(cmd.args[0])];
         if (!cmd.watch) {
             var watch = cmd.args.splice(1);
@@ -81,12 +72,8 @@ function watchAndRun(cmd) {
         else {
             cmd.watch = getWatchList(cmd);
         }
-        console.log('debug [watchAndRun:args] 2> ', cmd.args);
-        console.log('debug [watchAndRun:run] 2> ', cmd.run);
-        console.log('debug [watchAndRun:watch] 2> ', cmd.watch);
     }
     else if (!cmd.run && !cmd.watch && (!cmd.args || cmd.args.length === 0)) {
-        console.log('debug [watchAndRun:cmd] 3> ', cmd);
         var package_json_main = PACKAGE_JSON['main'];
         if (!package_json_main) {
             console.log(colors_1.default.red('=> Error: No run file passed and field "main" is missing in package.json, please correct one.'));
@@ -94,10 +81,6 @@ function watchAndRun(cmd) {
         }
         cmd.run = ["node ".concat(package_json_main)];
         cmd.watch = ['**/*.js'];
-        console.log('debug [watchAndRun:run] 3> ', cmd.run);
-        console.log('debug [watchAndRun:args] 3> ', cmd.args);
-        console.log('debug [watchAndRun:watch] 3> ', cmd.watch);
-        console.log('debug [watchAndRun:npm_main] 3> ', PACKAGE_JSON['main']);
         try {
             fs.statSync(package_json_main);
         }

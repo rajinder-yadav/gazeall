@@ -25,8 +25,6 @@ cmd
     .parse(node_process_1.default.argv);
 var options = cmd.opts();
 options.args = cmd.args;
-console.log('debug [options]> ', options);
-console.log('debug [cmd.args]> ', cmd.args);
 setTimeout(function () {
     (0, utils_1.watchAndRun)(options);
 }, parseInt(options['delay']) || 0);
