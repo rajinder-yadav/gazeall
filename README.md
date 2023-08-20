@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.10.5-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.10.6-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -42,6 +42,14 @@ Options:
   -H, --halt              halt on error.
   -h, --help              display help for command
 ```
+
+## Improved execution output
+
+![Image](img/run.png)
+
+1. You can now see what command and what files are being watched.
+2. Process output with Process ID + command in square brackets.
+3. Process execution time.
 
 ## CLI Examples
 
