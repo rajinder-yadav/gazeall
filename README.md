@@ -145,8 +145,7 @@ npx gazeall --run "node src/main.js" --watch "src/**/* libs/**/*"
 
 ### Delay running a command
 
-To delay running a command, make use of the "--delay <milliseconds>" flag.
-
+To delay running a command, make use of the "--delay \<milliseconds\>" flag.
 This will delay the execution of the command by 5 seconds.
 
 ```sh
