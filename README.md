@@ -2,11 +2,11 @@
 
 ![Travis](https://img.shields.io/travis/rajinder-yadav/gazeall.svg)
 ![Dependencies](https://david-dm.org/rajinder-yadav/gazeall.svg)
-![Version](https://img.shields.io/badge/Gazeall-0.10.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.10.3-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
-This project was developed in TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
+This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
 
 ## Watch and run
 
@@ -64,7 +64,7 @@ The above syntax is just shorthand for:
 npx gazeall --run "node main.js" --watch "**/*.js"
 ```
 
-The following short-cut:
+The following shorthand:
 
 ```sh
 npx gazeall main.js src bin
@@ -73,7 +73,7 @@ npx gazeall main.js src bin
 will expand to:
 
 ```sh
-npx gazeall --run "node main.js" --watch src/* bin/*
+npx gazeall --run "node main.js" --watch "src/*" "bin/*"
 ```
 
 For globs, always put then inside quotes.
@@ -117,21 +117,27 @@ This will run the command and then start to watch files under the "src" sub-fold
 npx gazeall --run "node src/main.js" --watch "src/**/*"
 ```
 
-This short-form will watch all files "**/*".
+This shorthand will watch all files under all sub-folders "**/*".
 
 ```sh
 npx gazeall --run "node src/main.js"
 ```
 
+Expands to:
+
+```sh
+npx gazeall --run "node src/main.js" --watch "**/*"
+```
+
 ### Watch all files under multiple sub-folders
 
-This will run the command and then start to watch files for changes under sub-folder "src" and "libs" to re-run command.
+This will run the command and then start to watch files for changes under sub-folder "src" and "libs".
 
 ```sh
 npx gazeall --run "node src/main.js" --watch "src/**/*" "libs/**/*"
 ```
 
-Alternative, pass watch a space seperate file list.
+Alternative, pass watch a space seperated file list.
 
 ```sh
 npx gazeall --run "node src/main.js" --watch "src/**/* libs/**/*"
@@ -139,7 +145,9 @@ npx gazeall --run "node src/main.js" --watch "src/**/* libs/**/*"
 
 ### Wait first and run command on change
 
-This command is only be execute after changes are detected.
+Usually Gazeall will execute the command immediately. However you can force it to wait for changes before executing the command. This might come is handy at odd times.
+
+Below command is only executed after changes are detected when the "--wait" flag is used.
 
 ```sh
 npx gazeall --wait --run "node src/main.js"
@@ -166,7 +174,7 @@ npx gazeall --run "node src/main.js" --watch index.html "src/*.js"
 Multiple commands, each command and argumets must be surrounded with quotes.
 
 ```sh
-npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*"
+npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*" "build/*"
 ```
 
 ## NPM script examples
@@ -187,7 +195,7 @@ gazeall --npms "scripts..." "watch folders and files"
 
 ### Run NPM scripts in synchronous mode
 
-In synchronous mode, _gazeall_ will wait for the running command to complete before running the next command.
+In synchronous mode, _gazeall_ will wait for the running command to complete before running the next command. Here three NPM scripts are run in sequence (build->webinit->webrefresh). The next script is run only after the current script completes.
 
 ```js
   "scripts": {

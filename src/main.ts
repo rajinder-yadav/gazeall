@@ -4,7 +4,7 @@
 import process from 'node:process';
 
 import {Command} from 'commander';
-import {watchAndRun, StopLaunchedProcesses} from './lib/utils';
+import {watchAndRun, StopLaunchedProcesses} from './lib/gazeall';
 
 /** Handle signal when User pressed CTRL+C to stop gazeall.*/
 process.on('SIGINT', function (code) {
@@ -16,7 +16,7 @@ const cmd = new Command();
 
 /** Command options. */
 cmd
-  .version('0.10.0', '-v, --version')
+  .version('gazeall version: 0.10.3', '-v, --version')
   .usage('[options] [files...]')
   .option(
     '-r, --run <command...>',
