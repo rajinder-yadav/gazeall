@@ -48,8 +48,11 @@ Options:
 ![Image](img/run.png)
 
 1. You can now see what command and what files are being watched.
-2. Process output with Process ID + command in square brackets.
-3. Process execution time.
+1. Process output with Process ID + command in square brackets.
+1. Process output after the "=>" arrow.
+1. Process execution time.
+
+This becomes more useful and multiple processes are executing.
 
 ## CLI Examples
 
