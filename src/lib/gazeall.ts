@@ -408,20 +408,20 @@ function readPackageJSONProperties(): any {
 
       if (!package_json['main'] || package_json['main'] === '') {
         console.log(
-          colors.red(
-            '=> Warning! Field main is missing or empty in package.json',
+          colors.magenta(
+            '=> Info! Field main is missing or empty in package.json',
           ),
         );
-      }
-
-      try {
-        stats = fs.statSync(package_json['main']);
-      } catch (ex: any) {
-        console.log(
-          colors.red(
-            `=> Warning! File ${package_json['main']} declared in package.json not found.`,
-          ),
-        );
+      } else {
+        try {
+          stats = fs.statSync(package_json['main']);
+        } catch (ex: any) {
+          console.log(
+            colors.magenta(
+              `=> Info! File ${package_json['main']} declared in package.json not found.`,
+            ),
+          );
+        }
       }
       return package_json;
     }
