@@ -2,6 +2,12 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.12.0 (2023-12-1)
+
+- Added a verbose logging flag.
+- Fix premature error when loading package.json
+- New debug logging
+
 ## 0.10.0 (2023-02-17)
 
 - When stopping running process, not show how many to stop.

@@ -1,6 +1,6 @@
 # Gazeall - Run command on folder and file changes
 
-![Version](https://img.shields.io/badge/Gazeall-0.11.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.12.0-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -26,19 +26,20 @@ npm install gazeall
 
 ```sh
 $ gazeall -h
-
 Usage: gazeall [options] [files...]
 
 Options:
   -v, --version           output the version number
-  -r, --run <command...>  run commands then wait for changes to re-run.
-  -w, --watch <files...>  files to watch for change.
-  -W, --wait              enter wait, commands will run on changes.
-  -p, --npmp <scripts>    NPM scripts to run parallel.
-  -s, --npms <scripts>    NPM scripts to run synchronous.
-  -d, --delay <ms>        start delay value in milliseconds.
-  -H, --halt              halt on error.
+  -r, --run <command...>  run commands then wait for changes to re-run
+  -w, --watch <files...>  files to watch for change
+  -W, --wait              enter wait, commands will run on changes
+  -p, --npmp <scripts>    NPM scripts to run parallel
+  -s, --npms <scripts>    NPM scripts to run synchronous
+  -d, --delay <ms>        start delay value in milliseconds
+  -H, --halt              halt on error
+  -V, --verbose           verbose logging
   -h, --help              display help for command
+
 ```
 
 ## Improved execution output
