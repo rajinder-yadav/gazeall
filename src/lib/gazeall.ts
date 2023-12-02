@@ -7,7 +7,6 @@ import process from 'node:process';
 import {Gaze} from 'gaze';
 import {exec, execSync, ChildProcess, spawn} from 'child_process';
 import colors from 'colors';
-// import { config } from "shelljs";
 
 /**
  * Command types
@@ -21,9 +20,9 @@ export interface GazeallOptions {
   run?: string[];
   wait?: boolean;
   watch?: string | string[];
+  verbose?: boolean;
+  PACKAGE_JSON: {};
 }
-
-const PACKAGE_JSON = readPackageJSONProperties();
 
 /**
  * Current running Child process.
@@ -109,7 +108,7 @@ export function watchAndRun(cmd: any): void {
     // Called with no run and watch files.
     // Try to read run filename from package.json
     // The field "main" will be used as the file to execute using Node.js.
-    const package_json_main = PACKAGE_JSON['main'];
+    const package_json_main = cmd.PACKAGE_JSON['main'];
     if (!package_json_main) {
       console.log(
         colors.red(
@@ -123,7 +122,7 @@ export function watchAndRun(cmd: any): void {
     // console.log('debug [watchAndRun:run] 3> ', cmd.run); // !debug
     // console.log('debug [watchAndRun:args] 3> ', cmd.args); // !debug
     // console.log('debug [watchAndRun:watch] 3> ', cmd.watch); // !debug
-    // console.log('debug [watchAndRun:npm_main] 3> ', PACKAGE_JSON['main']); // !debug
+    // console.log('debug [watchAndRun:npm_main] 3> ', cmd.PACKAGE_JSON['main']); // !debug
     try {
       fs.statSync(package_json_main);
     } catch (ex: any) {
@@ -154,12 +153,13 @@ export function watchAndRun(cmd: any): void {
   const gaze = new Gaze(cmd.watch);
 
   // Uncomment for debugging
-  // gaze.on( "ready", watcher => {
+  // gaze.on('ready', (watcher) => {
   //   const watched = gaze.watched();
-  //   console.log( colors.magenta( watched ) );
-  // } );
+  //   console.log('debug [gaze watcher] >', colors.yellow(watched));
+  // });
 
   gaze.on('changed', (file: string) => {
+    // console.log('debug [gaze changed] >', colors.yellow(file)); // !debug
     stopRunningProcess(child_procs);
     child_procs = [];
     run(cmd);
@@ -226,25 +226,23 @@ function run(cmd: GazeallOptions): void {
   if (cmd.npmp) {
     // Run NPM scripts in parallel.
     const run_list: string[] = cmd.npmp.split(/\s+/);
-    console.log('debug [npmp]>', run_list); // !debug
+    // console.log('debug [npmp]>', run_list); // !debug
     run_list.forEach((script: string) => {
-      const command = PACKAGE_JSON['scripts'][script];
-      const pid = runCommand(command, cmd?.halt || false);
+      const command = cmd.PACKAGE_JSON['scripts'][script];
+      const pid = runCommand(command, cmd?.halt ?? false);
+      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
       console.log(
-        colors.blue(
-          `=> Running script [${pid}:${command}] + Watching '${cmd.watch}'`,
-        ),
+        colors.blue(`=> Running script [${pid}:${command}]${watching}`),
       );
     });
   } else if (cmd.npms) {
     // Run NPM scripts in sequence.
     const run_list: string[] = cmd.npms.split(/\s+/);
-    console.log('debug [npms]>', run_list); // !debug
+    // console.log('debug [npms]>', run_list); // !debug
     run_list.forEach((script: string) => {
-      const command = PACKAGE_JSON['scripts'][script];
-      console.log(
-        colors.blue(`=> Running script [${command}] + Watching '${cmd.watch}'`),
-      );
+      const command = cmd.PACKAGE_JSON['scripts'][script];
+      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
+      console.log(colors.blue(`=> Running script [${command}]${watching}`));
       const t_execution = runCommandSync(command, cmd?.halt || false);
       console.log(
         colors.grey(`=> Process [${command}] completed (${t_execution} ms).`),
@@ -254,9 +252,8 @@ function run(cmd: GazeallOptions): void {
     // Run User supplied command.
     cmd.run.forEach((command) => {
       const pid = runCommand(command, cmd?.halt || false);
-      console.log(
-        colors.blue(`=> Running [${pid}:${command}] + Watching '${cmd.watch}'`),
-      );
+      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
+      console.log(colors.blue(`=> Running [${pid}:${command}]${watching}`));
     });
   } else {
     // Should never get here.
@@ -278,7 +275,7 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
   const cmd: string = args.shift() || '';
   const proc: ChildProcess = spawn(cmd, args, {detached: true});
   const t_start = performance.now();
-  //  console.log('debug t0=', t_start); // !debug
+  // console.log('debug t0=', t_start); // !debug
 
   child_procs.push(proc);
 
@@ -313,7 +310,7 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
 
   proc.on('close', (code) => {
     const t_end = performance.now();
-    //    console.log('debug t0==', t_start); // !debug
+    // console.log('debug t0==', t_start); // !debug
     console.log(
       colors.grey(
         `=> Process [${proc?.pid}:${command}] completed (${
@@ -397,7 +394,7 @@ function runCommandSync(command: string, err_halt: boolean): number {
  *
  * @returns package.json object.
  */
-function readPackageJSONProperties(): any {
+export function readPackageJSONProperties(): any {
   try {
     const file = path.join(process.cwd(), 'package.json');
     let stats = fs.statSync(file);
