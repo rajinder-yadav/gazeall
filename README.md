@@ -6,13 +6,13 @@
 
 This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
 
-## Watch and run
+## Watch file for changes and run things
 
 ![Image of Gazelle](img/gazelle.png)
 
-_Gazeall_ watches files and folders for changes, then leaps to action and executes a command.
+__Gazeall__ watches files and folders for changes, then leaps to action and executes one of more commands.
 
-_Gazeall_ works both as a CLI tool and equally well running NPM scripts inside "__package.json__".
+__Gazeall__ works both as a CLI tool and equally well running NPM scripts from "__package.json__".
 
 NPM Scripts can be run in parallel or synchronous mode.
 
@@ -46,21 +46,24 @@ Options:
 
 ![Image](img/run.png)
 
-1. You can now see what command and what files are being watched.
-1. Process output with Process ID + command in square brackets.
+Output now show the following:
+
+1. Commands being executed
+1. Files being watched when verbose mode enables (see options above).
+1. Process output with process id and command shown in square brackets.
 1. Process output after the "=>" arrow.
 1. Process execution time.
 
-This becomes more useful and multiple processes are executing.
+Improved output is more useful when multiple processes are executing.
 
 ## CLI Examples
 
-The examples below show various ways to run _gazeall_ from the command line.
+The examples below show various ways to run __gazeall__ from the command line.
 
-1. Make sure to place command inside quotes if options are passed or there are multiple commands.
-1. When using globs to recurse into sub-folders, make sure to put them inside quotes.
+1. Make sure to place commands inside quotes if options are passed or there are multiple commands.
+1. When using globs to recuse into sub-folders, make sure to put them inside quotes.
 
-### Run a program using Node.js
+### Run programs and commands using the CLI
 
 To run a JavaScript file using Node.js and have gazeall monitor all JavaScript file for changes in the current folder and all sub-folders, type the following.
 
@@ -74,58 +77,50 @@ The above syntax is just shorthand for:
 npx gazeall --run "node main.js" --watch "**/*.js"
 ```
 
-The following shorthand:
+The following shorthand will run a JavaScript file using Node:
 
 ```sh
 npx gazeall main.js src bin
 ```
 
-will expand to:
+is equivalent to:
 
 ```sh
 npx gazeall --run "node main.js" --watch "src/*" "bin/*"
 ```
 
-For globs, always put then inside quotes.
-
-```sh
-npx gazeall main.js "src/*" "bin/**/*"
-```
-
-### Run a program using Node.js from a NPM script
-
-If your project has a "__package.json__" file, and gazeall is run without any arguments from a NPM script like this:
-
-```json
-{
-  ...
-  "main": "server.js",
-  "scripts": {
-    "start": "gazeall"
-  },
-  ...
-}
-```
-
-When "npm start" is typed in the Terminal, gazeall will use the program name from the field "main" specified in package.json.
-
-The same execution logic will be used if you also type, "__npx gazeall__" in the Terminal from the root folder of the project.
-
-The above syntax are just shorthand for:
-
-```sh
-gazeall --run "node ${main}" --watch "**/*.js"
-```
-
-Where "${main}" is the value of the field main ("server.js" in this example).
-
 ### Watch all files and sub-folders
 
-This will run the command and then start to watch files under the "src" sub-folder for changes to re-run command.
+Watch all files under "__src__" folder.
 
 ```sh
-npx gazeall --run "node src/main.js" --watch "src/**/*"
+npx gazeall --run  <command> "src/*"
 ```
+
+__NOTE__: For file globs, always put then inside quotes.
+
+Watch all files under "__src__" folder and sub-folders.
+
+```sh
+npx gazeall --run <command> "src/**/*"
+```
+
+Watch all files under multiple folders recursively.
+
+__NOTE__: Files are space separated and quoted and always appear last.
+
+
+### Watch all files under multiple sub-folders
+
+This will run the command and then start to watch files for changes under sub-folder "__src__" and "__libs__".
+
+```sh
+npx gazeall --run <command> "folder1/**/*" "folder2/**/*"
+
+npx gazeall --run "node src/main.js" --watch "src/**/*" "libs/**/*"
+```
+
+### Omitting watch folders and files
 
 This shorthand will watch all files under all sub-folders "**/*".
 
@@ -139,23 +134,43 @@ Expands to:
 npx gazeall --run "node src/main.js" --watch "**/*"
 ```
 
-### Watch all files under multiple sub-folders
+#### Watch option
 
-This will run the command and then start to watch files for changes under sub-folder "src" and "libs".
+The watch flag is optional. Should you get confused about usage, it may be added to improve clarity.
 
 ```sh
-npx gazeall --run "node src/main.js" --watch "src/**/*" "libs/**/*"
+npx gazeall -r <command> -w "src/**/*" "test/**/*"
+
+npx gazeall --run <command> --watch "src/**/*" "test/**/*"
 ```
 
-Alternative, pass watch a space seperated file list.
+### Run a program using Node.js from a NPM script
+
+If your project has a "__package.json__" file, and gazeall is run without any arguments. It will look for the property in "__main__" and run the file using Node. If the "__main__" property is missing gazeall will exist with an error message.
+
+```json
+// File: package.json
+{
+  ...
+  "main": "server.js",
+  "scripts": {
+    "start": "gazeall"
+  },
+  ...
+}
+```
+
+The same execution logic will be used if you also type, "__npx gazeall__" in the Terminal from the root folder of the project.
+
+So typing just "__npx gazeall__" from the root of the Node project would be similar to:
 
 ```sh
-npx gazeall --run "node src/main.js" --watch "src/**/* libs/**/*"
+npx gazeall --run "node server.js --watch "**/*.js"
 ```
 
 ### Delay running a command
 
-To delay running a command, make use of the "--delay \<milliseconds\>" flag.
+To delay running a command, make use of the "__--delay \<milliseconds\>__" flag.
 This will delay the execution of the command by 5 seconds.
 
 ```sh
@@ -164,9 +179,9 @@ npx gazeall --run "node src/main.js" --delay 5000
 
 ### Wait first and run command on change
 
-Usually Gazeall will execute the command immediately. However you can force it to wait for changes before executing the command. This might come is handy at odd times.
+Gazeall executes the command immediately. However you can tell it to wait for changes before executing the command.
 
-Below command is only executed after changes are detected when the "--wait" flag is used.
+Below command is only executed after changes are detected when the "__--wait__" flag is used.
 
 ```sh
 npx gazeall --wait --run "node src/main.js"
@@ -180,17 +195,9 @@ Files are separated by a space.
 npx gazeall --run "node src/main.js" --watch index.html src/main.js
 ```
 
-### Target all JavaScript files under a folder
-
-Always make sure to put globs inside quotes.
-
-```sh
-npx gazeall --run "node src/main.js" --watch index.html "src/*.js"
-```
-
 ### Running multiple commands
 
-Multiple commands, each command and argumets must be surrounded with quotes.
+Multiple commands can be executed. Each command and its arguments must be surrounded with quotes.
 
 ```sh
 npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*" "build/*"
@@ -198,12 +205,12 @@ npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*" "build/*"
 
 ## NPM script examples
 
-For running NPM scripts inside package.json, _gazeall_ can run scripts either in _parallel_ or _synchronous_.
+For running NPM scripts inside package.json, __gazeall__ can run scripts either in __parallel__ or __synchronous__.
 
-* To run in parallel mode, use: `--npmp`.
-* To run in synchronous mode, use: `--npms`.
+* To run in parallel mode, use: "__--npmp__".
+* To run in synchronous mode, use: "__--npms__".
 
-_Note_: You may also use the `--wait` switch when running NPM scripts.
+__NOTE__: You may also use the "__--wait__" switch when running NPM scripts.
 
 The syntax format is:
 
@@ -212,40 +219,44 @@ gazeall --npmp "scripts..." "watch folders and files"
 gazeall --npms "scripts..." "watch folders and files"
 ```
 
-### Run NPM scripts in synchronous mode
+### Run NPM scripts in sequence
 
-In synchronous mode, _gazeall_ will wait for the running command to complete before running the next command. Here three NPM scripts are run in sequence (build->webinit->webrefresh). The next script is run only after the current script completes.
+In sequence mode, __gazeall__ will wait for the running command to complete before running the next command.
 
-```js
-  "scripts": {
-    "webwatch": "gazeall --npms \"build webinit webrefresh\" \"src/**/*\""
-  }
-```
-
-Here the build script runs and _gazeall_ watches two folders and their sub-folders.
+Here three NPM scripts are run in sequence (build->webinit->webrefresh). The next script is run only after the current script completes.
 
 ```js
   "scripts": {
-    "build": "gazeall --npms \"build\" \"src/**/*\" \"vendor/**/*\""
+    "webwatch": "gazeall --npms 'build webinit webrefresh' 'src/**/*'"
   }
 ```
 
-### Run NPM scripts in parallel mode
+__NOTE__: You can used single quotes inside the double quotes for grouping. This was you won't have to escape double quotes.
 
-In parallel mode, all scripts execute one after the other without waiting.
+This build script runs and __gazeall__ watches two folders and their sub-folders.
 
 ```js
   "scripts": {
-    "build": "gazeall --npmp \"run:dev run:test\" \"src/**/*\""
+    "build": "gazeall --npms build 'src/**/*' 'vendor/**/*'"
   }
 ```
 
-_gazeall_ runs NPM scripts and watches two folders and their sub-folders.
+### Run NPM scripts in parallel
+
+In gazeall parallel mode, all scripts execute one after the other without waiting.
 
 ```js
   "scripts": {
-    "build": "gazeall --npmp \"run:dev run:test\" \"src/**/*\" \"test/**/*\""
+    "build": "gazeall --npmp 'run:dev run:test' 'src/**/*'"
   }
 ```
 
-_Note_: We make use of double quote and need to escape them, this is the best practice as single quotes can have problem when used on Windows.
+__gazeall__ runs NPM scripts and watches two folders and their sub-folders.
+
+```js
+  "scripts": {
+    "build": "gazeall --npmp 'run:dev run:test' 'src/**/*' 'test/**/*'"
+  }
+```
+
+__NOTE__: We make use of double quote and need to escape them, this is the best practice as single quotes can have problem when used on Windows.
