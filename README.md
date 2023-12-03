@@ -1,6 +1,6 @@
 # Gazeall - Run command on folder and file changes
 
-![Version](https://img.shields.io/badge/Gazeall-0.12.0-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.12.1-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -46,7 +46,7 @@ Options:
 
 ![Image](img/run.png)
 
-Output now show the following:
+Output now shows the following:
 
 1. Commands being executed
 1. Files being watched when verbose mode enables (see options above).

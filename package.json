@@ -1,6 +1,6 @@
 {
   "name": "gazeall",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Gazeall - The all seeing file watcher and command executor.",
   "main": "src/main.ts",
   "config": {
