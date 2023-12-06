@@ -2,7 +2,12 @@
 
 All changes to this project will be recorded in this document.
 
-## 0.12.0 (2023-12-1)
+## 0.13.0 (2023-12-06)
+
+- Fix long standing issues with running command synchronously that would block
+  as a result changed detection was broken.
+
+## 0.12.0 (2023-12-01)
 
 - Added a verbose logging flag.
 - Fix premature error when loading package.json
