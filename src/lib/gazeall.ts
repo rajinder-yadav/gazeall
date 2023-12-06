@@ -239,15 +239,20 @@ function run(cmd: GazeallOptions): void {
     // Run NPM scripts in sequence.
     const run_list: string[] = cmd.npms.split(/\s+/);
     // console.log('debug [npms]>', run_list); // !debug
-    run_list.forEach((script: string) => {
-      const command = cmd.PACKAGE_JSON['scripts'][script];
-      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
-      console.log(colors.blue(`=> Running script [${command}]${watching}`));
-      const t_execution = runCommandSync(command, cmd?.halt || false);
-      console.log(
-        colors.grey(`=> Process [${command}] completed (${t_execution} ms).`),
-      );
-    });
+    const t_execution = runCommandsInSequence(
+      run_list,
+      cmd?.halt ?? false,
+      cmd,
+    );
+    // run_list.forEach((script: string) => {
+    //   const command = cmd.PACKAGE_JSON['scripts'][script];
+    //   const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
+    //   console.log(colors.blue(`=> Running script [${command}]${watching}`));
+    //   const t_execution = runCommandSync(command, cmd?.halt ?? false);
+    //   console.log(
+    //     colors.grey(`=> Process [${command}] completed (${t_execution} ms).`),
+    //   );
+    // });
   } else if (cmd.run) {
     // Run User supplied command.
     cmd.run.forEach((command) => {
@@ -318,6 +323,78 @@ function runCommand(command: string, err_halt: boolean): number | undefined {
         } ms).`,
       ),
     );
+  });
+  return proc?.pid;
+}
+
+function runCommandsInSequence(
+  commands: string[],
+  err_halt: boolean,
+  cmd: GazeallOptions,
+): number | undefined {
+  // console.log('debug runCommandsInSequence'); // !debug
+  if (commands.length === 0) {
+    return undefined;
+  }
+
+  const script: string | undefined = commands.shift();
+  if (script === undefined) {
+    return undefined;
+  }
+
+  const command = cmd.PACKAGE_JSON['scripts'][script];
+  const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
+  console.log(colors.blue(`=> Running script [${script}]${watching}`));
+
+  const args: string[] = command.split(/\s+/);
+  const commandToRun: string = args.shift() || '';
+  const proc: ChildProcess = spawn(commandToRun, args, {detached: true});
+  const t_start = performance.now();
+  // console.log('debug t0=', t_start); // !debug
+
+  child_procs.push(proc);
+
+  if (proc.stdout) {
+    proc.stdout.on('data', (data: Buffer) => {
+      // Note: an output might contain newlines, so we want to append proc to each line displayed.
+      data
+        .toString()
+        .split('\n')
+        .filter((v) => v !== '')
+        .map((v) =>
+          process.stdout.write(`[${proc?.pid}:${command}] => ${v}\n`),
+        );
+      // process.stdout.write(`[${proc?.pid}:${command}] => ${data.toString()}`);
+    });
+  }
+
+  if (proc.stderr) {
+    proc.stderr.on('data', (data: Buffer) => {
+      displayErrorMessage(data.toString());
+      if (err_halt) {
+        stopRunningProcess(child_procs);
+        process.stderr.write(
+          colors.red(
+            `=> Error! Process [${proc?.pid}:${command}] terminating.\n`,
+          ),
+        );
+        process.exit(4);
+      }
+      return runCommandsInSequence(commands, err_halt, cmd);
+    });
+  }
+
+  proc.on('close', (code) => {
+    const t_end = performance.now();
+    // console.log('debug t0==', t_start); // !debug
+    console.log(
+      colors.grey(
+        `=> Process [${proc?.pid}:${command}] completed (${
+          t_end - t_start
+        } ms).`,
+      ),
+    );
+    return runCommandsInSequence(commands, err_halt, cmd);
   });
   return proc?.pid;
 }
