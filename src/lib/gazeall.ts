@@ -229,11 +229,12 @@ function run(cmd: GazeallOptions): void {
     // console.log('debug [npmp]>', run_list); // !debug
     run_list.forEach((script: string) => {
       const command = cmd.PACKAGE_JSON['scripts'][script];
-      const pid = runCommand(command, cmd?.halt ?? false);
-      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
-      console.log(
-        colors.blue(`=> Running script [${pid}:${command}]${watching}`),
-      );
+      const pid = runCommand(command, cmd?.halt ?? false, cmd);
+
+      const logOutput = cmd?.verbose
+        ? `=> Running script [${pid}:${command}] ${cmd.watch}`
+        : `=> Running script [${command}]`;
+      console.log(colors.blue(logOutput));
     });
   } else if (cmd.npms) {
     // Run NPM scripts in sequence.
@@ -256,9 +257,12 @@ function run(cmd: GazeallOptions): void {
   } else if (cmd.run) {
     // Run User supplied command.
     cmd.run.forEach((command) => {
-      const pid = runCommand(command, cmd?.halt || false);
-      const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
-      console.log(colors.blue(`=> Running [${pid}:${command}]${watching}`));
+      const pid = runCommand(command, cmd?.halt || false, cmd);
+
+      const logOutput = cmd?.verbose
+        ? `=> Running script [${pid}:${command}] ${cmd.watch}`
+        : `=> Running script [${command}]`;
+      console.log(colors.blue(logOutput));
     });
   } else {
     // Should never get here.
@@ -275,25 +279,30 @@ function run(cmd: GazeallOptions): void {
  *                              If true, then exit gazeall.
  * @return {number} - Process PID.
  */
-function runCommand(command: string, err_halt: boolean): number | undefined {
+function runCommand(
+  command: string,
+  err_halt: boolean,
+  cmd: any,
+): number | undefined {
   const args: string[] = command.split(/\s+/);
-  const cmd: string = args.shift() || '';
-  const proc: ChildProcess = spawn(cmd, args, {detached: true});
+  const commandToRun: string = args.shift() || '';
+  const proc: ChildProcess = spawn(commandToRun, args, {detached: true});
   const t_start = performance.now();
   // console.log('debug t0=', t_start); // !debug
 
   child_procs.push(proc);
 
   if (proc.stdout) {
+    const logOutput = cmd?.verbose
+      ? `[${proc?.pid}:${command}] =>`
+      : `[${command}] =>`;
     proc.stdout.on('data', (data: Buffer) => {
       // Note: an output might contain newlines, so we want to append proc to each line displayed.
       data
         .toString()
         .split('\n')
         .filter((v) => v !== '')
-        .map((v) =>
-          process.stdout.write(`[${proc?.pid}:${command}] => ${v}\n`),
-        );
+        .map((v) => process.stdout.write(`${logOutput} ${v}\n`));
       // process.stdout.write(`[${proc?.pid}:${command}] => ${data.toString()}`);
     });
   }
@@ -343,12 +352,16 @@ function runCommandsInSequence(
   }
 
   const command = cmd.PACKAGE_JSON['scripts'][script];
-  const watching = cmd?.verbose ? ` + Watching '${cmd.watch}'` : '';
-  console.log(colors.blue(`=> Running script [${script}]${watching}`));
 
   const args: string[] = command.split(/\s+/);
   const commandToRun: string = args.shift() || '';
   const proc: ChildProcess = spawn(commandToRun, args, {detached: true});
+
+  const logOutput = cmd?.verbose
+    ? `=> Running script [${proc.pid}:${script}] ${cmd.watch}`
+    : `=> Running script [${script}]`;
+  console.log(colors.blue(logOutput));
+
   const t_start = performance.now();
   // console.log('debug t0=', t_start); // !debug
 
