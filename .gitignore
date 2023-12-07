@@ -16,5 +16,8 @@ yarn-error.log*
 
 .vscode
 
-install-npm.sh
-package.json.1
+npm-up.sh
+pack.sh
+package.json.t
+package.pub.json
+build-publish-npm.sh
