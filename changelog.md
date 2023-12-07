@@ -2,6 +2,11 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.13.1 (2023-12-07)
+
+- Improved default and verbose logging.
+- README update on logging.
+
 ## 0.13.0 (2023-12-06)
 
 - Fix long standing issues with running command synchronously that would block
