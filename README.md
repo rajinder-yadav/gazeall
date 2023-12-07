@@ -14,7 +14,7 @@ __Gazeall__ watches files and folders for changes, then leaps to action and exec
 
 __Gazeall__ works both as a CLI tool and equally well running NPM scripts from "__package.json__".
 
-NPM Scripts can be run in parallel or synchronous mode.
+NPM scripts can be run in parallel or synchronous mode.
 
 ## Install
 
@@ -44,7 +44,16 @@ Options:
 
 ## Improved execution output
 
+Default logging, with command.
+
 ![Image](img/run.png)
+
+Verbose logging, with process id, command, watch files.
+
+![Image](img/run-verbose.png)
+
+Logging with prefix, "=>" is what gazeall is doing.
+Logging in white, is output from executed command, process, or NPM script.
 
 Output now shows the following:
 
@@ -205,7 +214,7 @@ npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*" "build/*"
 
 ## NPM script examples
 
-For running NPM scripts inside package.json, __gazeall__ can run scripts either in __parallel__ or __synchronous__.
+For running NPM scripts inside package.json, __gazeall__ can run NPM scripts either in __parallel__ or __synchronous__.
 
 * To run in parallel mode, use: "__--npmp__".
 * To run in synchronous mode, use: "__--npms__".
@@ -223,7 +232,7 @@ gazeall --npms "scripts..." "watch folders and files"
 
 In sequence mode, __gazeall__ will wait for the running command to complete before running the next command.
 
-Here three NPM scripts are run in sequence (build->webinit->webrefresh). The next script is run only after the current script completes.
+Here three NPM scripts are run in sequence (build->webinit->webrefresh). The next NPM script is run only after the current NPM script completes.
 
 ```js
   "scripts": {
@@ -233,7 +242,7 @@ Here three NPM scripts are run in sequence (build->webinit->webrefresh). The nex
 
 __NOTE__: You can used single quotes inside the double quotes for grouping. This was you won't have to escape double quotes.
 
-This build script runs and __gazeall__ watches two folders and their sub-folders.
+This NPM script "build", runs and __gazeall__ watches two folders and their sub-folders.
 
 ```js
   "scripts": {
@@ -243,7 +252,7 @@ This build script runs and __gazeall__ watches two folders and their sub-folders
 
 ### Run NPM scripts in parallel
 
-In gazeall parallel mode, all scripts execute one after the other without waiting.
+In gazeall parallel mode, all NPM scripts execute one after the other without waiting.
 
 ```js
   "scripts": {
