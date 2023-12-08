@@ -20,7 +20,7 @@ const cmd = new Command();
 
 /** Command options. */
 cmd
-  .version('gazeall version: 0.13.0', '-v, --version')
+  .version('gazeall version: 0.13.2', '-v, --version')
   .usage('[options] [files...]')
   .option(
     '-r, --run <command...>',
