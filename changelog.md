@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.13.5 (2023-12-09)
+
+- Fixed delay when re-running commands.
+
 ## 0.13.1 (2023-12-07)
 
 - Improved default and verbose logging.
