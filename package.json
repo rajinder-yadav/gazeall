@@ -16,13 +16,14 @@
     "doc": "typedoc --module commonjs --target ES5 --ignoreCompilerErrors --exclude node_modules --out $npm_package_config_doc_folder src",
     "format": "prettier --write \"src/**/*.ts\"",
     "node:debug": "node --inspect --debug-brk $npm_package_bin_gazeall",
-    "prebuild": "run-s format clean",
+    "prebuild": "run-s format clean unlink",
+    "postbuild": "npm link",
     "precommit": "run-s format",
     "predoc": "shx rm -rf $npm_package_config_doc_folder && shx mkdir -p $npm_package_config_doc_folder",
     "prepush": "run-s test",
     "pretest": "run-s build",
     "test": "tape \"bin/**/*/test.*.js\"|tap-summary",
-    "tsc": "tsc"
+    "unlink": "npm unlink -g"
   },
   "keywords": [
     "javascript",
