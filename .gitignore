@@ -21,3 +21,4 @@ pack.sh
 package.json.t
 package.pub.json
 build-publish-npm.sh
+dev-notes.md
