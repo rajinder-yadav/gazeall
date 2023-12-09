@@ -162,7 +162,12 @@ export function watchAndRun(cmd: any): void {
     // console.log('debug [gaze changed] >', colors.yellow(file)); // !debug
     stopRunningProcess(child_procs);
     child_procs = [];
-    run(cmd);
+    setTimeout(
+      () => {
+        run(cmd);
+      },
+      parseInt(cmd['delay']) || 0,
+    );
   });
 }
 
