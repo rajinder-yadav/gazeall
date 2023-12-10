@@ -379,9 +379,7 @@ function runCommandsInSequence(
         .toString()
         .split('\n')
         .filter((v) => v !== '')
-        .map((v) =>
-          process.stdout.write(`[${proc?.pid}:${command}] => ${v}\n`),
-        );
+        .map((v) => process.stdout.write(`${logOutput} ${v}\n`));
       // process.stdout.write(`[${proc?.pid}:${command}] => ${data.toString()}`);
     });
   }
