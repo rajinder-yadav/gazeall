@@ -6,6 +6,36 @@
 
 This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
 
+## Table of Content
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=true} -->
+
+<!-- code_chunk_output -->
+
+1. [Gazeall - Run command on folder and file changes](#gazeall---run-command-on-folder-and-file-changes)
+    1. [Table of Content](#table-of-content)
+    2. [Watch file for changes and run things](#watch-file-for-changes-and-run-things)
+    3. [Install](#install)
+    4. [Usage](#usage)
+    5. [Improved execution output](#improved-execution-output)
+    6. [CLI Examples](#cli-examples)
+        1. [Run programs and commands using the CLI](#run-programs-and-commands-using-the-cli)
+        2. [Watch all files and sub-folders](#watch-all-files-and-sub-folders)
+        3. [Watch all files under multiple sub-folders](#watch-all-files-under-multiple-sub-folders)
+        4. [Omitting watch folders and files](#omitting-watch-folders-and-files)
+            1. [Watch option](#watch-option)
+        5. [Run a program using Node.js from a NPM script](#run-a-program-using-nodejs-from-a-npm-script)
+        6. [Delay running a command](#delay-running-a-command)
+        7. [Wait first and run command on change](#wait-first-and-run-command-on-change)
+        8. [Target specific files to watch](#target-specific-files-to-watch)
+        9. [Running multiple commands](#running-multiple-commands)
+    7. [NPM script examples](#npm-script-examples)
+        1. [Run NPM scripts in sequence](#run-npm-scripts-in-sequence)
+        2. [Run NPM scripts in parallel](#run-npm-scripts-in-parallel)
+    8. [Diagnosing EADDRESSINUSE](#diagnosing-eaddressinuse)
+
+<!-- /code_chunk_output -->
+
+
 ## Watch file for changes and run things
 
 ![Image of Gazelle](img/gazelle.png)
@@ -269,3 +299,23 @@ __gazeall__ runs NPM scripts and watches two folders and their sub-folders.
 ```
 
 __NOTE__: We make use of double quote and need to escape them, this is the best practice as single quotes can have problem when used on Windows.
+
+## Diagnosing EADDRESSINUSE
+
+Although code has been add to perform process clean up with Gazeall is stopped, there are time when a process is left running. When you run a process using Gazaall you might be presented with an the following error message:
+
+```sh
+Error: listen EADDRINUSE: address already in use
+```
+
+This can be easily cleaned up manually, figure out what address and or port is in use. Next use "lsof" to list process with open file discriptors. User the "-i" flag to filter on an interface and port.
+
+The following will list processes with an interface opened listening on port 3000.
+
+```sh
+lsof -i :3000
+```
+
+Then we can make use of the "kill -9" to forcefully terminate the process.
+
+![Process list](/img/eaddressinuse.png)
