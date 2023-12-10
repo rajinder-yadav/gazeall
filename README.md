@@ -1,6 +1,6 @@
 # Gazeall - Run command on folder and file changes
 
-![Version](https://img.shields.io/badge/Gazeall-0.13.6-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.13.7-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
@@ -302,13 +302,13 @@ __NOTE__: We make use of double quote and need to escape them, this is the best 
 
 ## Diagnosing EADDRESSINUSE
 
-Although code has been add to perform process clean up with Gazeall is stopped, there are time when a process is left running. When you run a process using Gazaall you might be presented with an the following error message:
+Although code has been add to perform process clean up with Gazeall is stopped, there are time when a process is left running. When you run a process using Gazeall you might be presented with an the following error message:
 
 ```sh
 Error: listen EADDRINUSE: address already in use
 ```
 
-This can be easily cleaned up manually, figure out what address and or port is in use. Next use "lsof" to list process with open file discriptors. User the "-i" flag to filter on an interface and port.
+This can be easily cleaned up manually, figure out what address and or port is in use. Next use "lsof" to list process with open file descriptors. User the "-i" flag to filter on an interface and port.
 
 The following will list processes with an interface opened listening on port 3000.
 
