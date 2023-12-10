@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.13.6 (2023-12-09)
+
+- Fixed verbose logging for sequential NPM script execution.
+
 ## 0.13.5 (2023-12-09)
 
 - Fixed delay when re-running commands.
