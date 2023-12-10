@@ -1,22 +1,20 @@
 # Gazeall - Run command on folder and file changes
 
-![Version](https://img.shields.io/badge/Gazeall-0.13.8-blue.svg)
+![Version](https://img.shields.io/badge/Gazeall-0.13.9-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
 This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
 
-## Table of Content
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=true} -->
 
 <!-- code_chunk_output -->
 
-1. [Table of Content](#table-of-content)
-2. [Watch file for changes and run things](#watch-file-for-changes-and-run-things)
-3. [Install](#install)
-4. [Usage](#usage)
-5. [Improved execution output](#improved-execution-output)
-6. [CLI Examples](#cli-examples)
+1. [Watch file for changes and run things](#watch-file-for-changes-and-run-things)
+2. [Install](#install)
+3. [Usage](#usage)
+4. [Improved execution output](#improved-execution-output)
+5. [CLI Examples](#cli-examples)
     1. [Run programs and commands using the CLI](#run-programs-and-commands-using-the-cli)
     2. [Watch all files and sub-folders](#watch-all-files-and-sub-folders)
     3. [Watch all files under multiple sub-folders](#watch-all-files-under-multiple-sub-folders)
@@ -26,11 +24,11 @@ This project was developed using TypeScript with the help of [TSCLI](https://www
     6. [Wait first and run command on change](#wait-first-and-run-command-on-change)
     7. [Target specific files to watch](#target-specific-files-to-watch)
     8. [Running multiple commands](#running-multiple-commands)
-7. [Run NPM scripts](#run-npm-scripts)
+6. [Run NPM scripts](#run-npm-scripts)
     1. [NPM script examples](#npm-script-examples)
     2. [Run NPM scripts in sequence](#run-npm-scripts-in-sequence)
     3. [Run NPM scripts in parallel](#run-npm-scripts-in-parallel)
-8. [Diagnosing EADDRESSINUSE](#diagnosing-eaddressinuse)
+7. [Diagnosing EADDRESSINUSE](#diagnosing-eaddressinuse)
 
 <!-- /code_chunk_output -->
 
