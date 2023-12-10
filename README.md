@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/rajinder-yadav/gazeall.svg)](https://greenkeeper.io/)
 
-This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
+This project was developed using the help of [DevMentor Project Creator Tools: DM-Tools](https://www.npmjs.com/package/dm-tools) (Spins up projects quickly, stop making them by hand).
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=true} -->
 
@@ -44,8 +44,16 @@ NPM scripts can be run in parallel or synchronous mode.
 
 ## Install
 
+Install in your Node.js project.
+
 ```sh
 npm install gazeall
+```
+
+Install globally to use as a command in other scripts.
+
+```sh
+npm install -g gazeall
 ```
 
 ## Usage
@@ -315,3 +323,9 @@ lsof -i :3000
 Then we can make use of the "kill -9" to forcefully terminate the process.
 
 ![Process list](/img/eaddressinuse.png)
+
+Pass the Process Id when terminating it. Make sure you have  the correct process.
+
+```sh
+kill -9 11049
+```
