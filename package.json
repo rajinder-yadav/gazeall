@@ -39,6 +39,11 @@
     "type": "git",
     "url": "https://github.com/rajinder-yadav/gazeall"
   },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^11.1.0",
+    "gaze": "^1.1.3"
+  },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/node": "^20.10.4",
@@ -54,10 +59,5 @@
     "tape-run": "^11.0.0",
     "typedoc": "^0.25.4",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "colors": "^1.4.0",
-    "commander": "^11.1.0",
-    "gaze": "^1.1.3"
   }
 }
