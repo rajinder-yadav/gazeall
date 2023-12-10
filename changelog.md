@@ -2,6 +2,10 @@
 
 All changes to this project will be recorded in this document.
 
+## 0.13.10 (2023-1210)
+
+- No fails silently when run with a JS file without a package.json file.
+
 ## 0.13.6 (2023-12-09)
 
 - Fixed verbose logging for sequential NPM script execution.

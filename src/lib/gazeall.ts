@@ -516,8 +516,9 @@ export function readPackageJSONProperties(): any {
       return package_json;
     }
   } catch (ex: any) {
-    console.log(colors.red(`=> Error: File package.json not found.`));
-    process.exit(6);
+    // Fail silently
+    // console.log(colors.red(`=> Error: File package.json not found.`));
+    // process.exit(6);
   }
   return undefined;
 }
