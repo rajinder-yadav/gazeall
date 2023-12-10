@@ -7,34 +7,32 @@
 This project was developed using TypeScript with the help of [TSCLI](https://www.npmjs.com/package/tscli)
 
 ## Table of Content
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=true} -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=true} -->
 
 <!-- code_chunk_output -->
 
-1. [Gazeall - Run command on folder and file changes](#gazeall---run-command-on-folder-and-file-changes)
-    1. [Table of Content](#table-of-content)
-    2. [Watch file for changes and run things](#watch-file-for-changes-and-run-things)
-    3. [Install](#install)
-    4. [Usage](#usage)
-    5. [Improved execution output](#improved-execution-output)
-    6. [CLI Examples](#cli-examples)
-        1. [Run programs and commands using the CLI](#run-programs-and-commands-using-the-cli)
-        2. [Watch all files and sub-folders](#watch-all-files-and-sub-folders)
-        3. [Watch all files under multiple sub-folders](#watch-all-files-under-multiple-sub-folders)
-        4. [Omitting watch folders and files](#omitting-watch-folders-and-files)
-            1. [Watch option](#watch-option)
-        5. [Run a program using Node.js from a NPM script](#run-a-program-using-nodejs-from-a-npm-script)
-        6. [Delay running a command](#delay-running-a-command)
-        7. [Wait first and run command on change](#wait-first-and-run-command-on-change)
-        8. [Target specific files to watch](#target-specific-files-to-watch)
-        9. [Running multiple commands](#running-multiple-commands)
-    7. [NPM script examples](#npm-script-examples)
-        1. [Run NPM scripts in sequence](#run-npm-scripts-in-sequence)
-        2. [Run NPM scripts in parallel](#run-npm-scripts-in-parallel)
-    8. [Diagnosing EADDRESSINUSE](#diagnosing-eaddressinuse)
+1. [Table of Content](#table-of-content)
+2. [Watch file for changes and run things](#watch-file-for-changes-and-run-things)
+3. [Install](#install)
+4. [Usage](#usage)
+5. [Improved execution output](#improved-execution-output)
+6. [CLI Examples](#cli-examples)
+    1. [Run programs and commands using the CLI](#run-programs-and-commands-using-the-cli)
+    2. [Watch all files and sub-folders](#watch-all-files-and-sub-folders)
+    3. [Watch all files under multiple sub-folders](#watch-all-files-under-multiple-sub-folders)
+    4. [Omitting watch folders and files](#omitting-watch-folders-and-files)
+        1. [Watch option](#watch-option)
+    5. [Delay running a command](#delay-running-a-command)
+    6. [Wait first and run command on change](#wait-first-and-run-command-on-change)
+    7. [Target specific files to watch](#target-specific-files-to-watch)
+    8. [Running multiple commands](#running-multiple-commands)
+7. [Run NPM scripts](#run-npm-scripts)
+    1. [NPM script examples](#npm-script-examples)
+    2. [Run NPM scripts in sequence](#run-npm-scripts-in-sequence)
+    3. [Run NPM scripts in parallel](#run-npm-scripts-in-parallel)
+8. [Diagnosing EADDRESSINUSE](#diagnosing-eaddressinuse)
 
 <!-- /code_chunk_output -->
-
 
 ## Watch file for changes and run things
 
@@ -183,30 +181,6 @@ npx gazeall -r <command> -w "src/**/*" "test/**/*"
 npx gazeall --run <command> --watch "src/**/*" "test/**/*"
 ```
 
-### Run a program using Node.js from a NPM script
-
-If your project has a "__package.json__" file, and gazeall is run without any arguments. It will look for the property in "__main__" and run the file using Node. If the "__main__" property is missing gazeall will exist with an error message.
-
-```json
-// File: package.json
-{
-  ...
-  "main": "server.js",
-  "scripts": {
-    "start": "gazeall"
-  },
-  ...
-}
-```
-
-The same execution logic will be used if you also type, "__npx gazeall__" in the Terminal from the root folder of the project.
-
-So typing just "__npx gazeall__" from the root of the Node project would be similar to:
-
-```sh
-npx gazeall --run "node server.js --watch "**/*.js"
-```
-
 ### Delay running a command
 
 To delay running a command, make use of the "__--delay \<milliseconds\>__" flag.
@@ -242,7 +216,31 @@ Multiple commands can be executed. Each command and its arguments must be surrou
 npx gazeall --run "tsc src/*.ts" "node build/main.js" --watch "src/*" "build/*"
 ```
 
-## NPM script examples
+## Run NPM scripts
+
+If your Node.js project has a "__package.json__" file, and gazeall is run without any arguments. It will look for the property in "__main__" and run the file using Node. If the "__main__" property is missing gazeall will exist with an error message.
+
+```json
+// File: package.json
+{
+  ...
+  "main": "server.js",
+  "scripts": {
+    "start": "gazeall"
+  },
+  ...
+}
+```
+
+The same execution logic will be used if you also type, "__npx gazeall__" in the Terminal from the root folder of the project.
+
+So typing just "__npx gazeall__" from the root of the Node project would be similar to:
+
+```sh
+npx gazeall --run "node server.js --watch "**/*.js"
+```
+
+### NPM script examples
 
 For running NPM scripts inside package.json, __gazeall__ can run NPM scripts either in __parallel__ or __synchronous__.
 
