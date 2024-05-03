@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 import process from 'node:process';
 
@@ -20,7 +19,7 @@ const cmd = new Command();
 
 /** Command options. */
 cmd
-  .version('gazeall version: 0.13.10', '-v, --version')
+  .version('gazeall version: 0.13.12', '-v, --version')
   .usage('[options] [files...]')
   .option(
     '-r, --run <command...>',

@@ -1,5 +1,3 @@
-'use strict';
-
 import * as path from 'path';
 import * as fs from 'fs';
 import process from 'node:process';
@@ -256,7 +254,7 @@ function run(cmd: GazeallOptions): void {
     //   console.log(colors.blue(`=> Running script [${command}]${watching}`));
     //   const t_execution = runCommandSync(command, cmd?.halt ?? false);
     //   console.log(
-    //     colors.grey(`=> Process [${command}] completed (${t_execution} ms).`),
+    //     colors.grey(`=> Process [${command}] exited (${t_execution} ms).`),
     //   );
     // });
   } else if (cmd.run) {
@@ -332,9 +330,7 @@ function runCommand(
     // console.log('debug t0==', t_start); // !debug
     console.log(
       colors.grey(
-        `=> Process [${proc?.pid}:${command}] completed (${
-          t_end - t_start
-        } ms).`,
+        `=> Process [${proc?.pid}:${command}] exited (${t_end - t_start} ms).`,
       ),
     );
   });
@@ -405,9 +401,7 @@ function runCommandsInSequence(
     // console.log('debug t0==', t_start); // !debug
     console.log(
       colors.grey(
-        `=> Process [${proc?.pid}:${command}] completed (${
-          t_end - t_start
-        } ms).`,
+        `=> Process [${proc?.pid}:${command}] exited (${t_end - t_start} ms).`,
       ),
     );
     return runCommandsInSequence(commands, err_halt, cmd);
